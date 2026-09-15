@@ -13,9 +13,6 @@
     "description": {
       "type": "text"
     },
-    "specs": {
-      "type": "json"
-    },
     "media": {
       "type": "media",
       "multiple": false,

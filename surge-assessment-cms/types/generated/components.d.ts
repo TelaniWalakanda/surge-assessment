@@ -38,7 +38,6 @@ export interface HomeBoxItem extends Struct.ComponentSchema {
   attributes: {
     description: Schema.Attribute.Text;
     media: Schema.Attribute.Media<'images' | 'videos'>;
-    specs: Schema.Attribute.JSON;
     title: Schema.Attribute.String;
   };
 }
