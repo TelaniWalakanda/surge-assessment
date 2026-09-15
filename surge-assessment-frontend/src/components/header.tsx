@@ -2,10 +2,6 @@ import type { HomeContent } from "@/lib/home-content";
 
 type HeaderProps = HomeContent["header"];
 
-/**
- * Fixed header that stays legible over both dark and light sections using
- * `mix-blend-difference` (white text inverts over white backgrounds).
- */
 export default function Header({
   logo,
   nav,
@@ -14,13 +10,13 @@ export default function Header({
   ctaText,
 }: HeaderProps) {
   return (
-    <header className="fixed inset-x-0 top-0 z-50 mix-blend-difference">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-white/60 backdrop-blur-xl">
       <div className="mx-auto flex h-20 w-full max-w-[1400px] items-center justify-between px-6">
         <a href="#" className="flex items-center gap-2">
           {logo ? (
-            <img src={logo} alt="NŌTA" className="h-7 w-auto" />
+            <img src={logo} alt="Nōta" className="h-7 w-auto" />
           ) : (
-            <span className="font-serif text-2xl italic text-white">Nota</span>
+            <span className="font-serif text-2xl text-black">Nōta</span>
           )}
         </a>
 
@@ -29,7 +25,7 @@ export default function Header({
             <a
               key={`${link.href}-${index}`}
               href={link.href}
-              className="text-sm font-medium text-white transition-opacity hover:opacity-60"
+              className="text-sm font-medium text-black/70 transition-colors hover:text-black"
             >
               {link.label}
             </a>
@@ -38,21 +34,19 @@ export default function Header({
 
         <a
           href="#order"
-          className="flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
+          className="flex items-center gap-2 rounded-full bg-white p-2 pl-4 shadow-sm transition-opacity hover:opacity-90"
         >
-          <span className="font-serif">{ctaText}</span>
-          {productCardText ? (
-            <>
-              <span className="opacity-50">·</span>
-              <span>{productCardText}</span>
-            </>
-          ) : null}
-          {price ? (
-            <>
-              <span className="opacity-50">·</span>
-              <span>{price}</span>
-            </>
-          ) : null}
+          <img
+            src="/order-logo.svg"
+            alt=""
+            aria-hidden="true"
+            className="h-5 w-auto shrink-0"
+          />
+          <span className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white">
+            {ctaText}
+            {productCardText ? ` ${productCardText}` : ""}
+            {price ? ` • ${price}` : ""}
+          </span>
         </a>
       </div>
     </header>
