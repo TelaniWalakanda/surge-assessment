@@ -64,8 +64,10 @@ export default function Colors({ options }: ColorsProps) {
       const progress =
         total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
 
-      const maxShift = (countRef.current - 1) * 100;
-      track.style.transform = `translateX(${(-progress * maxShift).toFixed(3)}vw)`;
+      // Step through one color at a time instead of a continuous chain.
+      const count = countRef.current;
+      const index = Math.min(count - 1, Math.round(progress * (count - 1)));
+      track.style.transform = `translateX(${-index * 100}vw)`;
     };
 
     const onScroll = () => update();
@@ -104,7 +106,11 @@ export default function Colors({ options }: ColorsProps) {
       >
         <div
           ref={trackRef}
-          className={`flex will-change-transform ${isDesktop ? "h-full" : ""}`}
+          className={`flex will-change-transform ${
+            isDesktop
+              ? "h-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              : ""
+          }`}
         >
           {options.map((option) => (
             <div
