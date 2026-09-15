@@ -17,9 +17,19 @@ export default function Header({
   ctaText,
 }: HeaderProps) {
   const [overLight, setOverLight] = useState(false);
+  const [headerHidden, setHeaderHidden] = useState(false);
 
   useEffect(() => {
     const update = () => {
+      const specifications = document.getElementById("specifications");
+      if (specifications?.hasAttribute("data-header-hidden")) {
+        setOverLight(false);
+        setHeaderHidden(true);
+        return;
+      }
+
+      setHeaderHidden(false);
+
       let overWhite = false;
       for (const section of Array.from(
         document.querySelectorAll("main section, footer"),
@@ -38,14 +48,27 @@ export default function Header({
     update();
     window.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update, { passive: true });
+    const specifications = document.getElementById("specifications");
+    const observer = specifications
+      ? new MutationObserver(update)
+      : null;
+    observer?.observe(specifications as HTMLElement, {
+      attributes: true,
+      attributeFilter: ["data-header-hidden"],
+    });
     return () => {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
+      observer?.disconnect();
     };
   }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-opacity duration-500 ${
+        headerHidden ? "pointer-events-none opacity-0" : "opacity-100"
+      }`}
+    >
       <div className="mx-auto h-fit flex w-full max-w-[1400px] justify-between px-[2.2vw] pt-5">
         <a href="#" className="flex items-center gap-2">
           {logo ? (

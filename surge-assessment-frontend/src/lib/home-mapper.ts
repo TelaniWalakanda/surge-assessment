@@ -140,7 +140,8 @@ export function mapHome(
           }),
         )
         .filter((g: Specification) => g.title || g.items.length > 0),
-      image: mediaUrl(specs.image),
+      desktopImage: mediaUrl(specs.image_desktop),
+      mobileImage: mediaUrl(specs.image_mobile),
     },
     audience: {
       introduction: str(audience.introductionText),

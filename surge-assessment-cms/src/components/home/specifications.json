@@ -16,7 +16,17 @@
       "component": "home.spec-group",
       "repeatable": true
     },
-    "image": {
+    "image_desktop": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "image_mobile": {
       "type": "media",
       "multiple": false,
       "allowedTypes": [

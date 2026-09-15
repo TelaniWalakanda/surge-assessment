@@ -75,7 +75,8 @@ export type HomeContent = {
     label: string;
     heading: string;
     groups: Specification[];
-    image: string | null;
+    desktopImage: string | null;
+    mobileImage: string | null;
   };
   audience: {
     introduction: string;

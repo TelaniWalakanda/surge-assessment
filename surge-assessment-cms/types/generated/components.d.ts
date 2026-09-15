@@ -178,7 +178,12 @@ export interface HomeSpecifications extends Struct.ComponentSchema {
     displayName: 'Specifications Section';
   };
   attributes: {
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    image_desktop: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    image_mobile: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     specifications_group: Schema.Attribute.Component<'home.spec-group', true>;
     specificationsHeading: Schema.Attribute.String;
     specificationsLabel: Schema.Attribute.String;
