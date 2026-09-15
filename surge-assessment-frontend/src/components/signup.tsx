@@ -10,7 +10,7 @@ export default function Signup({
 }: SignupProps) {
   return (
     <section className="bg-black text-white">
-      <div className="mx-auto max-w-3xl px-6 py-24 text-center md:py-32">
+      <div className="mx-auto max-w-3xl  px-6 md:px-11 py-24 text-center md:py-32">
         <h2 className="font-serif text-5xl md:text-7xl">{heading}</h2>
         <p className="mt-6 text-white/60">{description}</p>
 

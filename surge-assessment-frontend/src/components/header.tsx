@@ -70,7 +70,7 @@ export default function Header({
         headerHidden ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <div className="mx-auto h-fit flex w-full items-start justify-between px-[2.2vw] pt-5 md:pt-10 border-b border-white/20 border-0">
+      <div className="mx-auto h-fit flex w-full items-start justify-between px-6 md:px-11 pt-5 md:pt-10 border-b border-white/20 border-0">
         <div className="flex items-center gap-5">
           <a href="#" className="flex items-center gap-2">
             {logo ? (

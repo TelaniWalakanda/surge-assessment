@@ -15,7 +15,7 @@ export default function Audience({
 
   return (
     <section id="about" className="scroll-mt-20 bg-black text-white">
-      <div className="mx-auto max-w-[1400px] px-6 py-24 md:py-32">
+      <div className="mx-auto px-6 md:px-11 py-24 md:py-32">
         <p className="max-w-4xl font-serif text-3xl leading-tight md:text-5xl">
           {introduction}
         </p>

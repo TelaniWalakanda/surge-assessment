@@ -9,7 +9,7 @@ type ColorsProps = {
 
 function Slide({ option }: { option: ColorOption }) {
   return (
-    <div className="relative h-full w-screen shrink-0 overflow-hidden">
+    <div className="relative h-full w-screen shrink-0 overflow-hidden px-6 md:px-11 ">
       {option.image ? (
         <img
           src={option.image}
