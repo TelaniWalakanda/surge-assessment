@@ -1,22 +1,69 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import type { HomeContent } from "@/lib/home-content";
 
 type HeaderProps = HomeContent["header"];
 
+/**
+ * Fixed, adaptive header: white text/logo by default, switching to black
+ * while it sits over a white-background section.
+ */
 export default function Header({
   logo,
   nav,
-  productCardText,
+  productName,
   price,
   ctaText,
 }: HeaderProps) {
+  const [overLight, setOverLight] = useState(false);
+
+  useEffect(() => {
+    const update = () => {
+      let overWhite = false;
+      for (const section of Array.from(
+        document.querySelectorAll("main section, footer"),
+      )) {
+        const rect = section.getBoundingClientRect();
+        // Section currently behind the vertical center of the header.
+        if (rect.top <= 40 && rect.bottom > 40) {
+          overWhite =
+            getComputedStyle(section).backgroundColor === "rgb(255, 255, 255)";
+          break;
+        }
+      }
+      setOverLight(overWhite);
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-black/5 bg-white/60 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 w-full max-w-[1400px] items-center justify-between px-6">
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div className="mx-auto h-fit flex w-full max-w-[1400px] justify-between px-[2.2vw] pt-5">
         <a href="#" className="flex items-center gap-2">
           {logo ? (
-            <img src={logo} alt="Nōta" className="h-7 w-auto" />
+            <img
+              src={logo}
+              alt="Nōta"
+              className={`h-7 w-auto transition-[filter] ${
+                overLight ? "invert" : ""
+              }`}
+            />
           ) : (
-            <span className="font-serif text-2xl text-black">Nōta</span>
+            <span
+              className={`font-serif text-2xl transition-colors ${
+                overLight ? "text-black" : "text-white"
+              }`}
+            >
+              Nōta
+            </span>
           )}
         </a>
 
@@ -25,7 +72,11 @@ export default function Header({
             <a
               key={`${link.href}-${index}`}
               href={link.href}
-              className="text-sm font-medium text-black/70 transition-colors hover:text-black"
+              className={`text-sm font-medium text-[1.61vw] transition-colors ${
+                overLight
+                  ? "text-black/70 hover:text-black"
+                  : "text-white/80 hover:text-white"
+              }`}
             >
               {link.label}
             </a>
@@ -34,17 +85,21 @@ export default function Header({
 
         <a
           href="#order"
-          className="flex items-center gap-2 rounded-full bg-white p-2 pl-4 shadow-sm transition-opacity hover:opacity-90"
+          className="flex items-center gap-2 bg-white pl-4 shadow-sm transition-opacity hover:opacity-90 p-[14px]"
         >
           <img
             src="/order-logo.svg"
             alt=""
             aria-hidden="true"
-            className="h-5 w-auto shrink-0"
+            className="h-[4.03vw] w-[3.83vw] shrink-0"
           />
-          <span className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white">
+          <span className="bg-black px-4 py-2 text-sm text-[1.61vw] text-white p-[20px]">
             {ctaText}
-            {productCardText ? ` ${productCardText}` : ""}
+            {productName ? (
+              <span className="text-[rgba(255,255,255,0.4)]">
+                {` ${productName}`}
+              </span>
+            ) : null}
             {price ? ` • ${price}` : ""}
           </span>
         </a>
