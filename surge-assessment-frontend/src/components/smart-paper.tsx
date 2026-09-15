@@ -5,12 +5,7 @@ type SmartPaperProps = HomeContent["smartPaper"];
 export default function SmartPaper({ eyebrow, title, stories }: SmartPaperProps) {
   return (
     <section id="smart-paper" className="scroll-mt-20 bg-black text-white">
-      <div className="mx-auto max-w-[1400px] px-6 py-24 md:py-32">
-        <h2 className="font-serif text-5xl md:text-7xl">
-          {eyebrow}
-          <span className="block text-white/50">{title}</span>
-        </h2>
-
+      <div className="mx-auto px-6 md:px-11 py-24 md:py-32">
         <div className="mt-16 grid grid-cols-1 gap-x-12 gap-y-20 md:grid-cols-2">
           {stories.map((story) => (
             <article key={story.title}>
