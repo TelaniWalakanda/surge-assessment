@@ -64,6 +64,7 @@ export interface HomeColorOption extends Struct.ComponentSchema {
   };
   attributes: {
     color: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     name: Schema.Attribute.String;
     tagline: Schema.Attribute.String;
   };
