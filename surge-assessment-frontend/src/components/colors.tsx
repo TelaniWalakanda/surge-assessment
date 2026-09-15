@@ -70,7 +70,7 @@ export default function Colors({ options }: ColorsProps) {
 
     const onScroll = () => update();
 
-    const mq = window.matchMedia("(min-width: 768px)");
+    const mq = window.matchMedia("(min-width: 1024px)");
     const apply = () => {
       isDesktopRef.current = mq.matches;
       setIsDesktop(mq.matches);
