@@ -1,11 +1,11 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
+import ShapeWipe from "@/components/shape-wipe";
 import Specifications from "@/components/specifications";
 import Audience from "@/components/audience";
 import SmartPaper from "@/components/smart-paper";
 import InsideTheBox from "@/components/inside-the-box";
 import Colors from "@/components/colors";
-import Signup from "@/components/signup";
 import Footer from "@/components/footer";
 import SectionIntro from "@/components/section-intro";
 import { mapHome } from "@/lib/home-mapper";
@@ -68,6 +68,7 @@ export default async function Home() {
       <main>
         <Hero {...content.hero} />
         <div className="relative z-10">
+          <ShapeWipe />
           <Specifications {...content.specifications} />
           <Audience {...content.audience} />
           <SectionIntro
@@ -81,7 +82,6 @@ export default async function Home() {
           />
           <InsideTheBox {...content.insideTheBox} />
           <Colors {...content.colors} />
-          <Signup {...content.signup} />
         </div>
       </main>
       <Footer {...content.footer} />
