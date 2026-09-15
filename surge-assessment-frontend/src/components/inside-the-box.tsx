@@ -7,24 +7,39 @@ export default function InsideTheBox({
   title,
   introTitle,
   introDescription,
+  introMedia,
   smartPenDescription,
   items,
   mediaFiles,
 }: InsideTheBoxProps) {
   return (
     <section id="inside-the-box" className="scroll-mt-20 bg-white text-black">
-      <div className="mx-auto px-6 md:px-11 py-24 md:py-32">
-        <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2 md:items-end">
-          <div>
-            <h3 className="text-2xl font-semibold">{introTitle}</h3>
-            <p className="mt-4 max-w-md text-black/60">{introDescription}</p>
+      <div className="mx-auto py-24 md:py-32">
+        <div
+          className="relative mt-20 flex h-[100vh] w-full justify-end overflow-hidden rounded-3xl"
+          style={
+            introMedia
+              ? {
+                  backgroundImage: `url(${introMedia})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : undefined
+          }
+        >
+          <div className="max-w-lg p-6 md:p-6">
+            <h3 className="font-serif text-3xl font-semibold leading-tight text-black md:text-5xl">
+              {introTitle}
+            </h3>
+            <p className="mt-4 text-black/60">{introDescription}</p>
           </div>
-          {smartPenDescription ? (
-            <p className="font-serif text-2xl leading-snug md:text-3xl">
-              {smartPenDescription}
-            </p>
-          ) : null}
         </div>
+
+        {smartPenDescription ? (
+          <p className="mt-16 font-serif text-2xl leading-snug md:text-3xl">
+            {smartPenDescription}
+          </p>
+        ) : null}
 
         <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2">
           {items.map((item) => (

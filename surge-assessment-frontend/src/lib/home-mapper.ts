@@ -177,6 +177,7 @@ export function mapHome(
       title: str(boxIntro.title),
       introTitle: str(boxIntroSection.title),
       introDescription: str(boxIntroSection.description),
+      introMedia: mediaUrl(boxIntroSection.media),
       smartPenDescription: str(d.smart_pen_description),
       items: (Array.isArray(d.inside_box) ? d.inside_box : []).map(
         (b: AnyRecord): BoxItem => ({

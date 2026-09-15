@@ -101,6 +101,7 @@ export type HomeContent = {
     title: string;
     introTitle: string;
     introDescription: string;
+    introMedia: string | null;
     smartPenDescription: string;
     items: BoxItem[];
     mediaFiles: MediaChip[];
