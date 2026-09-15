@@ -37,7 +37,7 @@ export default function HeroPen({
 
   useEffect(() => {
     // Desktop only — never load the ~1.8MB animation on mobile.
-    if (!window.matchMedia("(min-width: 768px)").matches) return;
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
 
     let disposed = false;
     let ready = false;
@@ -141,7 +141,7 @@ export default function HeroPen({
             ) : null}
           </div>
           <div className="mt-auto px-6 pb-14 text-center">
-            <h1 className="font-serif text-[12.5vw] text-4xl leading-[0.95] tracking-tight text-white">
+            <h1 className="font-serif text-[12.5vw] md:text-[9.68vw] leading-[0.95] tracking-tight text-white">
               {eyebrow}
               <br />
               {headline}
