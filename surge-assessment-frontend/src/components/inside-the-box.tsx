@@ -13,7 +13,7 @@ export default function InsideTheBox({
 }: InsideTheBoxProps) {
   return (
     <section id="inside-the-box" className="scroll-mt-20 bg-white text-black">
-      <div className="mx-auto max-w-[1400px] px-6 py-24 md:py-32">
+      <div className="mx-auto px-6 md:px-11 py-24 md:py-32">
         <h2 className="font-serif text-6xl leading-none md:text-8xl">
           {eyebrow}
           <br />

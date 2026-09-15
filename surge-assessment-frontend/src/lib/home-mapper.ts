@@ -168,6 +168,10 @@ export function mapHome(
         }),
       ),
     },
+    paperIntro: {
+      eyebrow: str(paperIntro.eyebrow),
+      title: str(paperIntro.title),
+    },
     insideTheBox: {
       eyebrow: str(boxIntro.eyebrow),
       title: str(boxIntro.title),
@@ -188,6 +192,10 @@ export function mapHome(
           media: mediaList(m?.media_file),
         }),
       ),
+    },
+    boxIntro: {
+      eyebrow: str(boxIntro.eyebrow),
+      title: str(boxIntro.title),
     },
     colors: {
       options: (Array.isArray(d.colors) ? d.colors : []).map(

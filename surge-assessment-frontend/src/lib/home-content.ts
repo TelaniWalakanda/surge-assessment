@@ -51,6 +51,11 @@ export type ColorOption = {
   image: string | null;
 };
 
+export type SectionIntroContent = {
+  eyebrow: string;
+  title: string;
+};
+
 export type HomeContent = {
   header: {
     logo: string | null;
@@ -100,6 +105,8 @@ export type HomeContent = {
     items: BoxItem[];
     mediaFiles: MediaChip[];
   };
+  paperIntro: SectionIntroContent;
+  boxIntro: SectionIntroContent;
   colors: {
     options: ColorOption[];
   };
