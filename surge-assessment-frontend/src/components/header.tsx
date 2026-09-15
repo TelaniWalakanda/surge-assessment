@@ -70,13 +70,14 @@ export default function Header({
         headerHidden ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      <div className="mx-auto h-fit flex w-full max-w-[1400px] justify-between px-[2.2vw] pt-5">
-        <a href="#" className="flex items-center gap-2">
-          {logo ? (
-            <img
-              src={logo}
-              alt="Nōta"
-              className={`h-7 w-auto transition-[filter] ${
+      <div className="mx-auto h-fit flex w-full items-start justify-between px-[2.2vw] pt-5 md:pt-10 border-b border-white/20 border-0">
+        <div className="flex items-center gap-5">
+          <a href="#" className="flex items-center gap-2">
+            {logo ? (
+              <img
+                src={logo}
+                alt="Nōta"
+                className={`h-7 w-auto transition-[filter] ${
                 overLight ? "invert" : ""
               }`}
             />
@@ -89,14 +90,12 @@ export default function Header({
               Nōta
             </span>
           )}
-        </a>
-
-        <nav className="hidden items-center gap-8 md:flex">
+        </a><nav className="hidden items-center gap-8 md:flex">
           {nav.map((link, index) => (
             <a
               key={`${link.href}-${index}`}
               href={link.href}
-              className={`text-sm font-medium text-[1.61vw] transition-colors ${
+              className={`text-sm font-medium md:text-xl transition-colors ${
                 overLight
                   ? "text-black/70 hover:text-black"
                   : "text-white/80 hover:text-white"
@@ -105,11 +104,11 @@ export default function Header({
               {link.label}
             </a>
           ))}
-        </nav>
-
+        </nav></div>
+        
         <a
           href="#order"
-          className="flex items-center gap-2 bg-white pl-4 shadow-sm transition-opacity hover:opacity-90 p-[14px]"
+          className="flex items-center gap-10 bg-white pl-4 shadow-sm transition-opacity hover:opacity-90 p-[14px]"
         >
           <img
             src={productCardLogo ?? "/order-logo.svg"}
@@ -117,7 +116,7 @@ export default function Header({
             aria-hidden="true"
             className="h-[4.03vw] w-[3.83vw] shrink-0"
           />
-          <span className="bg-black px-4 py-2 text-sm text-[1.61vw] text-white p-[20px]">
+          <span className="bg-black px-4 py-2 text-sm md:text-xl text-white hover:bg-[rgb(255,34,0)] transition-colors">
             {ctaText}
             {productName ? (
               <span className="text-[rgba(255,255,255,0.4)]">
