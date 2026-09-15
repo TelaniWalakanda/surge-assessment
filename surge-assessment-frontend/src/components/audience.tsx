@@ -25,19 +25,19 @@ export default function Audience({
             {eyebrow}
           </h2>
           {title ? (
-            <h3 className="mt-4 font-serif text-3xl">{title}</h3>
+            <h3 className="mt-4 font-serif text-3xl text-end w-full">{title}</h3>
           ) : null}
           {description ? (
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white/70">
+            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-white text-end ml-[40%] font-bold">
               {description}
             </p>
           ) : null}
 
-          <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-10 items-end justify-items-end">
             {cards.map((card) => (
-              <article key={card.title}>
-                <h3 className="text-xl font-semibold">{card.title}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-white/60">
+              <article key={card.title} className="max-w-md items-end">
+                <h3 className="text-xl font-semibold text-end">{card.title}</h3>
+                <p className="mt-4 text-sm leading-relaxed text-white text-end">
                   {card.description}
                 </p>
               </article>
