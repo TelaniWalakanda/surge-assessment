@@ -54,7 +54,7 @@ function RevealText({ text }: { text: string }) {
   return (
     <p
       ref={ref}
-      className="max-w-7xl px-6 text-center font-serif text-7xl leading-snug md:text-5xl"
+      className="max-w-7xl px-6 text-center font-serif text-2xl leading-snug md:text-5xl"
     >
       {Array.from(text).map((letter, index) => (
         <span key={index} style={{ color: "rgb(221, 221, 221)" }}>

@@ -419,9 +419,11 @@ export default function SmartPaper({
             <div
               key={`${story.title}-${index}`}
               className="
+                h-[85vh]
                 w-screen
                 shrink-0
                 snap-center
+                md:h-full
               "
             >
               <StorySlide
