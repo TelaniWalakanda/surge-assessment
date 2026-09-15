@@ -47,14 +47,33 @@ const DEFAULT_NAV: NavLink[] = [
   { label: "Inside the box", href: "#inside-the-box" },
 ];
 
+const NAV_ANCHORS: Record<string, string> = {
+  specifications: "#specifications",
+  "who it's for": "#who-its-for",
+  about: "#about",
+  "inside the box": "#inside-the-box",
+};
+
+const slugify = (value: string): string =>
+  value
+    .toLowerCase()
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 const toNavLinks = (value: unknown): NavLink[] => {
   if (!Array.isArray(value)) return [];
   return value
-    .map((n) => ({
-      label: str((n as AnyRecord)?.label),
-      href: str((n as AnyRecord)?.link),
-    }))
-    .filter((n) => n.label && n.href);
+    .map((n) => {
+      const label = str((n as AnyRecord)?.label).trim();
+      const raw = str((n as AnyRecord)?.link).trim();
+      const href =
+        raw && raw !== "#"
+          ? raw
+          : NAV_ANCHORS[label.toLowerCase()] ?? `#${slugify(label)}`;
+      return { label, href };
+    })
+    .filter((n) => n.label);
 };
 
 type AnyRecord = Record<string, unknown>;
@@ -76,6 +95,7 @@ export function mapHome(
   const h = (headerData ?? {}) as AnyRecord;
   const f = (footerData ?? {}) as AnyRecord;
 
+  const hasHeader = headerData != null;
   const headerNav = toNavLinks(h.nav_link);
   const footerNav = toNavLinks(f.nav_link);
 
@@ -83,10 +103,12 @@ export function mapHome(
     header: {
       logo: mediaUrl(h.logo),
       nav: headerNav.length > 0 ? headerNav : DEFAULT_NAV,
-      productName: str(h.product_name) || str(hero.productName),
-      productCardText: str(h.product_card_text) || str(hero.productCardTitle),
-      price: str(h.price) || str(hero.price),
-      ctaText: str(h.cta_text) || str(hero.cta) || "Order",
+      productName: hasHeader ? str(h.product_name) : str(hero.productName),
+      productCardText: hasHeader
+        ? str(h.product_card_text)
+        : str(hero.productCardTitle),
+      price: hasHeader ? str(h.price) : str(hero.price),
+      ctaText: hasHeader ? str(h.cta_text) : str(hero.cta) || "Order",
       productCardLogo: mediaUrl(h.product_card_logo),
     },
     hero: {

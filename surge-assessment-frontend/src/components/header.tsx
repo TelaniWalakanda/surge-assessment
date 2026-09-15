@@ -25,9 +25,9 @@ export default function Header({
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {nav.map((link) => (
+          {nav.map((link, index) => (
             <a
-              key={link.href}
+              key={`${link.href}-${index}`}
               href={link.href}
               className="text-sm font-medium text-white transition-opacity hover:opacity-60"
             >
@@ -41,10 +41,18 @@ export default function Header({
           className="flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
         >
           <span className="font-serif">{ctaText}</span>
-          <span className="opacity-50">·</span>
-          <span>{productCardText}</span>
-          <span className="opacity-50">·</span>
-          <span>{price}</span>
+          {productCardText ? (
+            <>
+              <span className="opacity-50">·</span>
+              <span>{productCardText}</span>
+            </>
+          ) : null}
+          {price ? (
+            <>
+              <span className="opacity-50">·</span>
+              <span>{price}</span>
+            </>
+          ) : null}
         </a>
       </div>
     </header>

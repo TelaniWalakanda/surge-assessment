@@ -1,6 +1,13 @@
 import type { Core } from '@strapi/strapi';
 
-const HOME_FIND_ACTION = 'api::home.home.find';
+/**
+ * Single types the Next.js frontend reads without authentication.
+ */
+const PUBLIC_FIND_ACTIONS = [
+  'api::home.home.find',
+  'api::header.header.find',
+  'api::footer.footer.find',
+];
 
 export default {
   /**
@@ -19,15 +26,15 @@ export default {
    * run jobs, or perform some special logic.
    */
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
-    await ensurePublicHomeFindPermission(strapi);
+    await ensurePublicFindPermissions(strapi);
   },
 };
 
 /**
- * Ensures the "Public" role can read the `home` single type, so the Next.js
- * frontend can fetch `GET /api/home` without authentication. Idempotent.
+ * Ensures the "Public" role can read the configured single types, so the
+ * Next.js frontend can fetch them without authentication. Idempotent.
  */
-async function ensurePublicHomeFindPermission(strapi: Core.Strapi) {
+async function ensurePublicFindPermissions(strapi: Core.Strapi) {
   try {
     const publicRole: any = await strapi
       .query('plugin::users-permissions.role')
@@ -38,22 +45,25 @@ async function ensurePublicHomeFindPermission(strapi: Core.Strapi) {
     const existing: any[] = await strapi.db
       .query('plugin::users-permissions.permission')
       .findMany({
-        where: { action: HOME_FIND_ACTION },
+        where: { action: { $in: PUBLIC_FIND_ACTIONS } },
         populate: ['role'],
       });
 
-    const alreadySet = existing.some(
-      (permission: any) => permission?.role?.id === publicRole.id,
-    );
+    for (const action of PUBLIC_FIND_ACTIONS) {
+      const alreadySet = existing.some(
+        (permission: any) =>
+          permission?.action === action && permission?.role?.id === publicRole.id,
+      );
 
-    if (!alreadySet) {
-      await strapi
-        .query('plugin::users-permissions.permission')
-        .create({ data: { action: HOME_FIND_ACTION, role: publicRole.id } });
-      strapi.log.info('Granted public read access to the Home single type.');
+      if (!alreadySet) {
+        await strapi
+          .query('plugin::users-permissions.permission')
+          .create({ data: { action, role: publicRole.id } });
+        strapi.log.info(`Granted public read access to ${action}.`);
+      }
     }
   } catch (error) {
-    strapi.log.warn('Could not grant public read access to the Home single type:', error);
+    strapi.log.warn('Could not grant public read access:', error);
   }
 }
 

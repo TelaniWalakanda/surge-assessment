@@ -16,8 +16,8 @@ export default function Footer({ text, navTitle, nav, year, footnote }: FooterPr
               {navTitle}
             </h3>
             <ul className="mt-4 space-y-2">
-              {nav.map((link) => (
-                <li key={link.href}>
+              {nav.map((link, index) => (
+                <li key={`${link.href}-${index}`}>
                   <a
                     href={link.href}
                     className="text-white/70 transition-colors hover:text-white"
