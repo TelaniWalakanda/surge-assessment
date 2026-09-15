@@ -23,7 +23,7 @@ function Slide({ option }: { option: ColorOption }) {
         />
       )}
 
-      <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between px-6 md:px-20">
+      <div className="absolute inset-x-0 top-1/2 flex -translate-y-1/2 items-center justify-between px-6 md:px-40 lg:p-60">
         <span className="font-serif text-2xl text-white md:text-6xl">
           {option.name}
         </span>
