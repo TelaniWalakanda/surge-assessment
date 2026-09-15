@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_home_color_options",
+  "info": {
+    "displayName": "Color Option",
+    "icon": "paint-brush",
+    "description": "A product color option with swatch color"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "tagline": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    }
+  }
+}

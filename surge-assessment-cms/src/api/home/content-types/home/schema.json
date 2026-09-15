@@ -1,0 +1,98 @@
+{
+  "kind": "singleType",
+  "collectionName": "homes",
+  "info": {
+    "singularName": "home",
+    "pluralName": "homes",
+    "displayName": "Home",
+    "description": "Home page content"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "hero": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.hero"
+    },
+    "specificationsLabel": {
+      "type": "string"
+    },
+    "specificationsHeading": {
+      "type": "string"
+    },
+    "specifications": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.spec-group"
+    },
+    "audienceHeading": {
+      "type": "string"
+    },
+    "audienceIntro": {
+      "type": "text"
+    },
+    "audience": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.audience-card"
+    },
+    "aboutHeading": {
+      "type": "string"
+    },
+    "aboutParagraphs": {
+      "type": "json"
+    },
+    "smartPaperHeadingTop": {
+      "type": "string"
+    },
+    "smartPaperHeadingBottom": {
+      "type": "string"
+    },
+    "smartPaper": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.feature"
+    },
+    "insideTheBoxHeading": {
+      "type": "string"
+    },
+    "insideTheBoxIntro": {
+      "type": "text"
+    },
+    "insideTheBox": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.box-item"
+    },
+    "colorsHeading": {
+      "type": "string"
+    },
+    "colors": {
+      "type": "component",
+      "repeatable": true,
+      "component": "home.color-option"
+    },
+    "signup": {
+      "type": "component",
+      "repeatable": false,
+      "component": "home.signup"
+    },
+    "footerYear": {
+      "type": "string"
+    },
+    "footerCopyright": {
+      "type": "string"
+    },
+    "footerCredits": {
+      "type": "json"
+    },
+    "seo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "shared.seo"
+    }
+  }
+}

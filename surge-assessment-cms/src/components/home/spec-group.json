@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_home_spec_groups",
+  "info": {
+    "displayName": "Spec Group",
+    "icon": "list",
+    "description": "A specification column with a title and bullet items"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "items": {
+      "type": "json"
+    }
+  }
+}

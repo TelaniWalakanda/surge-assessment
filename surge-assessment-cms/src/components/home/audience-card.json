@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_home_audience_cards",
+  "info": {
+    "displayName": "Audience Card",
+    "icon": "user",
+    "description": "A single audience card in the Who it's for section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    }
+  }
+}

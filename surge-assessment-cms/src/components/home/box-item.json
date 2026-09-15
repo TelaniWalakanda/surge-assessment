@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_home_box_items",
+  "info": {
+    "displayName": "Box Item",
+    "icon": "box",
+    "description": "An item inside the box section"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "specs": {
+      "type": "json"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "videos"]
+    }
+  }
+}
