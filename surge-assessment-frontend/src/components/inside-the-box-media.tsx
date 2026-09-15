@@ -39,7 +39,7 @@ function MediaFigure({
         />
       )}
       {entry.chipText ? (
-        <figcaption className="absolute bottom-[50%] left-[50%] bg-white/90 px-4 py-1.5 text-xs font-medium text-black backdrop-blur">
+        <figcaption className="absolute bottom-[50%] left-[50%] bg-white/90 px-4 py-1.5 text-md font-medium text-black backdrop-blur rounded-2xl">
           {entry.chipText}
         </figcaption>
       ) : null}
@@ -56,9 +56,9 @@ export default function InsideTheBoxMedia({
   const rest = mediaFiles.slice(6);
 
   return (
-    <div className="mt-20 space-y-10">
+    <div className="mt-20 space-y-10 p-5">
       {/* First three: left rows 3:1, right single full-height image */}
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:grid-rows-[80vh_10vh]">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:grid-rows-[75vh_15vh]">
         <MediaFigure
           entry={first}
           figureClass="md:col-start-1 md:row-start-1"
@@ -67,12 +67,12 @@ export default function InsideTheBoxMedia({
         <MediaFigure
           entry={second}
           figureClass="md:col-start-1 md:row-start-2"
-          mediaClass="w-full object-cover md:h-full md:w-1/4 float-right rounded-xl"
+          mediaClass="w-full object-cover md:h-full md:w-1/3 float-right rounded-xl"
         />
         <MediaFigure
           entry={third}
           figureClass="md:col-start-2 md:row-start-1 md:row-span-2"
-          mediaClass="aspect-[4/3] object-cover md:aspect-auto md:h-full rounded-2xl"
+          mediaClass="aspect-[4/3] object-cover md:aspect-auto md:h-full rounded-2xl rounded-[15%]"
         />
       </div>
 
@@ -80,7 +80,7 @@ export default function InsideTheBoxMedia({
       {fourth ? (
         <MediaFigure
           entry={fourth}
-          mediaClass="aspect-[16/9] w-full object-cover rounded-full"
+          mediaClass="w-full object-cover rounded-[20%] h-[80vh]"
         />
       ) : null}
 
@@ -89,11 +89,11 @@ export default function InsideTheBoxMedia({
         <div className="grid grid-cols-1 gap-6 md:grid-cols-[2fr_1fr] md:auto-rows-[40vh]">
           <MediaFigure
             entry={fifth}
-            mediaClass="aspect-[4/3] w-full object-cover md:aspect-auto md:h-full"
+            mediaClass="aspect-[4/3] w-full object-cover md:aspect-auto md:h-full rounded-2xl"
           />
           <MediaFigure
             entry={sixth}
-            mediaClass="aspect-[4/3] w-full object-cover md:aspect-auto md:h-full"
+            mediaClass="aspect-[4/3] w-full object-cover md:aspect-auto md:h-full rounded-2xl"
           />
         </div>
       ) : null}
