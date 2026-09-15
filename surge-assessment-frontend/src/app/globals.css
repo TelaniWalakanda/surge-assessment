@@ -13,6 +13,11 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* Site-wide mobile/desktop breakpoint: `md` = 1024px. */
+@theme {
+  --breakpoint-md: 64rem;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
