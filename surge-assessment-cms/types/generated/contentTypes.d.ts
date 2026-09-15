@@ -661,7 +661,7 @@ export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
       'api::header.header'
     > &
       Schema.Attribute.Private;
-    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    logo: Schema.Attribute.Media<'images' | 'files'>;
     nav_link: Schema.Attribute.Component<'shared.nav-links', true>;
     price: Schema.Attribute.String;
     product_card_logo: Schema.Attribute.Media<
