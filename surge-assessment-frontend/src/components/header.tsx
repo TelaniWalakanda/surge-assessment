@@ -15,6 +15,7 @@ export default function Header({
   productName,
   price,
   ctaText,
+  productCardLogo,
 }: HeaderProps) {
   const [overLight, setOverLight] = useState(false);
   const [headerHidden, setHeaderHidden] = useState(false);
@@ -111,7 +112,7 @@ export default function Header({
           className="flex items-center gap-2 bg-white pl-4 shadow-sm transition-opacity hover:opacity-90 p-[14px]"
         >
           <img
-            src="/order-logo.svg"
+            src={productCardLogo ?? "/order-logo.svg"}
             alt=""
             aria-hidden="true"
             className="h-[4.03vw] w-[3.83vw] shrink-0"
