@@ -1,6 +1,69 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import type { HomeContent } from "@/lib/home-content";
+import InsideTheBoxMedia from "@/components/inside-the-box-media";
 
 type InsideTheBoxProps = HomeContent["insideTheBox"];
+
+function RevealText({ text }: { text: string }) {
+  const ref = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const spans = Array.from(el.querySelectorAll("span"));
+    if (!spans.length) return;
+
+    let rafId = 0;
+
+    const update = () => {
+      rafId = 0;
+      const rect = el.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const center = rect.top + rect.height / 2;
+      const progress = Math.max(
+        0,
+        Math.min(1, (viewportHeight - center) / (viewportHeight / 2)),
+      );
+
+      spans.forEach((span, index) => {
+        // Typewriter reveal: each letter flips to black as its threshold passes.
+        const threshold = (index + 1) / spans.length;
+        const value = progress >= threshold ? 0 : 221;
+        span.style.color = `rgb(${value}, ${value}, ${value})`;
+      });
+    };
+
+    const onScroll = () => {
+      if (!rafId) rafId = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [text]);
+
+  return (
+    <p
+      ref={ref}
+      className="max-w-7xl px-6 text-center font-serif text-7xl leading-snug md:text-5xl"
+    >
+      {Array.from(text).map((letter, index) => (
+        <span key={index} style={{ color: "rgb(221, 221, 221)" }}>
+          {letter}
+        </span>
+      ))}
+    </p>
+  );
+}
 
 export default function InsideTheBox({
   eyebrow,
@@ -36,63 +99,30 @@ export default function InsideTheBox({
         </div>
 
         {smartPenDescription ? (
-          <p className="mt-16 font-serif text-2xl leading-snug md:text-3xl">
-            {smartPenDescription}
-          </p>
+          <div className="flex h-screen w-full items-center justify-center bg-white">
+            <RevealText text={smartPenDescription} />
+          </div>
         ) : null}
 
-        <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2">
+        <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2 px-6 h-[100vh]">
           {items.map((item) => (
             <article key={item.title}>
+              <h3 className="mt-6 text-xl font-semibold text-center">{item.title}</h3>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-black/60 float-right">
+                {item.description}
+              </p>
               {item.media ? (
                 <img
                   src={item.media}
                   alt={item.title}
-                  className="aspect-[4/3] w-full rounded-2xl object-cover"
+                  className="w-full object-cover"
                 />
               ) : null}
-              <h3 className="mt-6 text-xl font-semibold">{item.title}</h3>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-black/60">
-                {item.description}
-              </p>
             </article>
           ))}
         </div>
 
-        {mediaFiles.length > 0 ? (
-          <div className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-3">
-            {mediaFiles.map((entry, index) => {
-              const media = entry.media[0];
-              if (!media) return null;
-              const isVideo = (media.mime ?? "").startsWith("video");
-              return (
-                <figure key={index} className="relative">
-                  {isVideo ? (
-                    <video
-                      src={media.url}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="aspect-[4/3] w-full rounded-2xl object-cover"
-                    />
-                  ) : (
-                    <img
-                      src={media.url}
-                      alt={entry.chipText ?? ""}
-                      className="aspect-[4/3] w-full rounded-2xl object-cover"
-                    />
-                  )}
-                  {entry.chipText ? (
-                    <figcaption className="absolute bottom-4 left-4 rounded-full bg-white/90 px-4 py-1.5 text-xs font-medium text-black backdrop-blur">
-                      {entry.chipText}
-                    </figcaption>
-                  ) : null}
-                </figure>
-              );
-            })}
-          </div>
-        ) : null}
+        <InsideTheBoxMedia mediaFiles={mediaFiles} />
       </div>
     </section>
   );
