@@ -10,6 +10,11 @@ export type NavLink = {
   href: string;
 };
 
+export type MediaItem = {
+  url: string;
+  mime: string | null;
+};
+
 export type Specification = {
   title: string;
   items: string[];
@@ -20,62 +25,81 @@ export type AudienceCard = {
   description: string;
 };
 
-export type Feature = {
+export type FeatureStory = {
+  eyebrow: string;
   title: string;
   description: string;
+  image: string | null;
 };
 
 export type BoxItem = {
   title: string;
   description: string;
   specs: string[];
+  media: string | null;
+};
+
+export type MediaChip = {
+  chipText: string | null;
+  media: MediaItem[];
 };
 
 export type ColorOption = {
   name: string;
   tagline: string;
-  color?: string;
+  color: string | null;
+  image: string | null;
 };
 
 export type HomeContent = {
-  brand: string;
-  brandTagline: string;
-  nav: NavLink[];
+  header: {
+    logo: string | null;
+    nav: NavLink[];
+    productName: string;
+    productCardText: string;
+    price: string;
+    ctaText: string;
+    productCardLogo: string | null;
+  };
   hero: {
     eyebrow: string;
     headline: string;
     productName: string;
+    productCardTitle: string;
     price: string;
     cta: string;
-    productCardTitle: string;
+    mobileBgImage: string | null;
+    mobileNavImage: string | null;
   };
   specifications: {
     label: string;
     heading: string;
     groups: Specification[];
+    image: string | null;
   };
   audience: {
-    heading: string;
-    intro: string;
+    introduction: string;
+    eyebrow: string;
+    title: string;
+    description: string;
     cards: AudienceCard[];
-  };
-  about: {
-    heading: string;
-    paragraphs: string[];
+    media: MediaItem[];
   };
   smartPaper: {
-    headingTop: string;
-    headingBottom: string;
-    features: Feature[];
+    eyebrow: string;
+    title: string;
+    stories: FeatureStory[];
   };
   insideTheBox: {
-    heading: string;
-    subheading: string;
-    intro: string;
+    eyebrow: string;
+    title: string;
+    introTitle: string;
+    introDescription: string;
+    smartPenDescription: string;
     items: BoxItem[];
+    mediaFiles: MediaChip[];
   };
   colors: {
-    heading: string;
     options: ColorOption[];
   };
   signup: {
@@ -85,9 +109,10 @@ export type HomeContent = {
     button: string;
   };
   footer: {
-    navigationHeading: string;
+    text: string;
+    navTitle: string;
+    nav: NavLink[];
     year: string;
-    copyright: string;
-    credits: string[];
+    footnote: string;
   };
 };

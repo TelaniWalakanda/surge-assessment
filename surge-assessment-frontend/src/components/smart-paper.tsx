@@ -1,37 +1,31 @@
-import MediaPlaceholder from "@/components/media-placeholder";
 import type { HomeContent } from "@/lib/home-content";
 
 type SmartPaperProps = HomeContent["smartPaper"];
 
-export default function SmartPaper({
-  headingTop,
-  headingBottom,
-  features,
-}: SmartPaperProps) {
+export default function SmartPaper({ eyebrow, title, stories }: SmartPaperProps) {
   return (
-    <section id="smart-paper" className="border-t border-white/10">
-      <div className="mx-auto max-w-6xl px-6 py-24">
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          {headingTop}{" "}
-          <span className="text-white/50">{headingBottom}</span>
+    <section id="smart-paper" className="scroll-mt-20 bg-black text-white">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:py-32">
+        <h2 className="font-serif text-5xl md:text-7xl">
+          {eyebrow}
+          <span className="block text-white/50">{title}</span>
         </h2>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
-          {features.map((feature, index) => (
-            <article
-              key={feature.title}
-              className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-8"
-            >
-              <h3 className="text-xl font-semibold">{feature.title}</h3>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-white/60">
-                {feature.description}
-              </p>
-              {index === 1 && (
-                <MediaPlaceholder
-                  label="Paper pattern visual"
-                  className="mt-8 aspect-video"
+        <div className="mt-16 grid grid-cols-1 gap-x-12 gap-y-20 md:grid-cols-2">
+          {stories.map((story) => (
+            <article key={story.title}>
+              {story.image ? (
+                <img
+                  src={story.image}
+                  alt={story.title}
+                  className="aspect-[4/3] w-full rounded-2xl object-cover"
                 />
-              )}
+              ) : null}
+              <p className="mt-8 text-sm text-white/50">{story.eyebrow}</p>
+              <h3 className="mt-2 text-2xl font-semibold">{story.title}</h3>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/60">
+                {story.description}
+              </p>
             </article>
           ))}
         </div>

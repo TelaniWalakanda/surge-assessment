@@ -9,12 +9,10 @@ export default function Signup({
   button,
 }: SignupProps) {
   return (
-    <section className="border-t border-white/10">
-      <div className="mx-auto max-w-2xl px-6 py-24 text-center">
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          {heading}
-        </h2>
-        <p className="mt-4 text-white/60">{description}</p>
+    <section className="bg-black text-white">
+      <div className="mx-auto max-w-3xl px-6 py-24 text-center md:py-32">
+        <h2 className="font-serif text-5xl md:text-7xl">{heading}</h2>
+        <p className="mt-6 text-white/60">{description}</p>
 
         <form className="mx-auto mt-10 flex max-w-md flex-col gap-3 sm:flex-row">
           <input

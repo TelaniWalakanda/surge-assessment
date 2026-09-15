@@ -1,20 +1,27 @@
-import type { NavLink } from "@/lib/home-content";
+import type { HomeContent } from "@/lib/home-content";
 
-type HeaderProps = {
-  brand: string;
-  tagline: string;
-  nav: NavLink[];
-};
+type HeaderProps = HomeContent["header"];
 
-export default function Header({ brand, tagline, nav }: HeaderProps) {
+/**
+ * Fixed header that stays legible over both dark and light sections using
+ * `mix-blend-difference` (white text inverts over white backgrounds).
+ */
+export default function Header({
+  logo,
+  nav,
+  productCardText,
+  price,
+  ctaText,
+}: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-        <a href="#" className="flex items-baseline gap-3">
-          <span className="text-xl font-bold tracking-tight">{brand}</span>
-          <span className="hidden text-xs uppercase tracking-[0.2em] text-white/50 sm:inline">
-            {tagline}
-          </span>
+    <header className="fixed inset-x-0 top-0 z-50 mix-blend-difference">
+      <div className="mx-auto flex h-20 w-full max-w-[1400px] items-center justify-between px-6">
+        <a href="#" className="flex items-center gap-2">
+          {logo ? (
+            <img src={logo} alt="NŌTA" className="h-7 w-auto" />
+          ) : (
+            <span className="font-serif text-2xl italic text-white">Nota</span>
+          )}
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -22,7 +29,7 @@ export default function Header({ brand, tagline, nav }: HeaderProps) {
             <a
               key={link.href}
               href={link.href}
-              className="text-sm text-white/70 transition-colors hover:text-white"
+              className="text-sm font-medium text-white transition-opacity hover:opacity-60"
             >
               {link.label}
             </a>
@@ -31,9 +38,13 @@ export default function Header({ brand, tagline, nav }: HeaderProps) {
 
         <a
           href="#order"
-          className="rounded-full border border-white/20 px-5 py-2 text-sm font-medium transition-colors hover:bg-white hover:text-black"
+          className="flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
         >
-          Order
+          <span className="font-serif">{ctaText}</span>
+          <span className="opacity-50">·</span>
+          <span>{productCardText}</span>
+          <span className="opacity-50">·</span>
+          <span>{price}</span>
         </a>
       </div>
     </header>

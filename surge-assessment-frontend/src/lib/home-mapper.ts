@@ -1,37 +1,94 @@
-import type { HomeContent } from "@/lib/home-content";
+import { getStrapiMedia } from "@/lib/strapi";
+import type {
+  BoxItem,
+  ColorOption,
+  FeatureStory,
+  HomeContent,
+  MediaChip,
+  MediaItem,
+  NavLink,
+  Specification,
+} from "@/lib/home-content";
 
 /**
- * Maps the Strapi `home` single-type REST response into the `HomeContent`
- * shape consumed by the section components. All values come from the CMS.
+ * Maps the Strapi `home`, `header` and `footer` single-type REST responses
+ * into the `HomeContent` shape consumed by the section components.
  */
 
 const str = (value: unknown): string =>
   typeof value === "string" && value.length > 0 ? value : "";
 
-const optionalStr = (value: unknown): string | undefined =>
-  typeof value === "string" && value.length > 0 ? value : undefined;
+const optionalStr = (value: unknown): string | null =>
+  typeof value === "string" && value.length > 0 ? value : null;
 
 function asStringList(value: unknown): string[] {
-  if (Array.isArray(value)) return value.map((v) => String(v));
+  if (Array.isArray(value)) return value.map((v) => String(v)).filter(Boolean);
   return [];
 }
 
-type AnyRecord = Record<string, any>;
+const mediaUrl = (m: unknown): string | null =>
+  getStrapiMedia((m as { url?: string } | null | undefined)?.url ?? null);
 
-export function mapHome(data: unknown): HomeContent {
-  const d = (data ?? {}) as AnyRecord;
+const mediaList = (m: unknown): MediaItem[] => {
+  const arr = Array.isArray(m) ? m : m ? [m] : [];
+  const result: MediaItem[] = [];
+  for (const x of arr) {
+    const rec = (x ?? {}) as { url?: string; mime?: string };
+    const url = mediaUrl(rec);
+    if (url) result.push({ url, mime: rec.mime ?? null });
+  }
+  return result;
+};
+
+const DEFAULT_NAV: NavLink[] = [
+  { label: "Specifications", href: "#specifications" },
+  { label: "Who it's for", href: "#who-its-for" },
+  { label: "About", href: "#about" },
+  { label: "Inside the box", href: "#inside-the-box" },
+];
+
+const toNavLinks = (value: unknown): NavLink[] => {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((n) => ({
+      label: str((n as AnyRecord)?.label),
+      href: str((n as AnyRecord)?.link),
+    }))
+    .filter((n) => n.label && n.href);
+};
+
+type AnyRecord = Record<string, unknown>;
+
+export function mapHome(
+  homeData: unknown,
+  headerData?: unknown,
+  footerData?: unknown,
+): HomeContent {
+  const d = (homeData ?? {}) as AnyRecord;
   const hero = (d.hero ?? {}) as AnyRecord;
+  const specs = (d.specificationsSection ?? {}) as AnyRecord;
+  const audience = (d.audienceSection ?? {}) as AnyRecord;
+  const paperIntro = (d.paperIntro ?? {}) as AnyRecord;
+  const boxIntro = (d.boxIntro ?? {}) as AnyRecord;
+  const boxIntroSection = (d.inside_box_section ?? {}) as AnyRecord;
   const signup = (d.signup ?? {}) as AnyRecord;
 
+  const h = (headerData ?? {}) as AnyRecord;
+  const f = (footerData ?? {}) as AnyRecord;
+
+  const headerNav = toNavLinks(h.nav_link);
+  const footerNav = toNavLinks(f.nav_link);
+
   return {
-    brand: "NŌTA",
-    brandTagline: "Writing Infrastructure for Modern Thinking",
-    nav: [
-      { label: "Specifications", href: "#specifications" },
-      { label: "Who it's for", href: "#who-its-for" },
-      { label: "About", href: "#about" },
-      { label: "Inside the box", href: "#inside-the-box" },
-    ],
+    header: {
+      logo: mediaUrl(h.logo),
+      nav: headerNav.length > 0 ? headerNav : DEFAULT_NAV,
+      productName: str(h.product_name) || str(hero.productName),
+      productCardText: str(h.product_card_text) || str(hero.productCardTitle),
+      price: str(h.price) || str(hero.price),
+      ctaText: str(h.cta_text) || str(hero.cta) || "Order",
+      productCardLogo: mediaUrl(h.product_card_logo),
+    },
     hero: {
       eyebrow: str(hero.eyebrow),
       headline: str(hero.headline),
@@ -39,58 +96,85 @@ export function mapHome(data: unknown): HomeContent {
       productCardTitle: str(hero.productCardTitle),
       price: str(hero.price),
       cta: str(hero.cta),
+      mobileBgImage: mediaUrl(hero.hero_mobile_bg_image),
+      mobileNavImage: mediaUrl(hero.hero_mobile_navigation_image),
     },
     specifications: {
-      label: str(d.specificationsLabel),
-      heading: str(d.specificationsHeading),
-      groups: (Array.isArray(d.specifications) ? d.specifications : []).map(
-        (g: AnyRecord) => ({
-          title: str(g?.title),
-          items: asStringList(g?.items),
-        }),
-      ),
+      label: str(specs.specificationsLabel),
+      heading: str(specs.specificationsHeading),
+      groups: (Array.isArray(specs.specifications_group)
+        ? specs.specifications_group
+        : []
+      )
+        .map(
+          (g: AnyRecord): Specification => ({
+            title: str(g?.title),
+            items: (Array.isArray(g?.specification_text)
+              ? g.specification_text
+              : []
+            )
+              .map((i: AnyRecord) => str(i?.specification))
+              .filter(Boolean),
+          }),
+        )
+        .filter((g: Specification) => g.title || g.items.length > 0),
+      image: mediaUrl(specs.image),
     },
     audience: {
-      heading: str(d.audienceHeading),
-      intro: str(d.audienceIntro),
-      cards: (Array.isArray(d.audience) ? d.audience : []).map((c: AnyRecord) => ({
-        title: str(c?.title),
-        description: str(c?.description),
-      })),
-    },
-    about: {
-      heading: str(d.aboutHeading),
-      paragraphs: asStringList(d.aboutParagraphs),
+      introduction: str(audience.introductionText),
+      eyebrow: str(audience.eyebrow),
+      title: str(audience.title),
+      description: str(audience.description),
+      cards: (Array.isArray(audience.audiences) ? audience.audiences : []).map(
+        (c: AnyRecord) => ({
+          title: str(c?.title),
+          description: str(c?.description),
+        }),
+      ),
+      media: mediaList(audience.image),
     },
     smartPaper: {
-      headingTop: str(d.smartPaperHeadingTop),
-      headingBottom: str(d.smartPaperHeadingBottom),
-      features: (Array.isArray(d.smartPaper) ? d.smartPaper : []).map(
-        (f: AnyRecord) => ({
-          title: str(f?.title),
-          description: str(f?.description),
+      eyebrow: str(paperIntro.eyebrow),
+      title: str(paperIntro.title),
+      stories: (Array.isArray(d.featuresSection) ? d.featuresSection : []).map(
+        (s: AnyRecord): FeatureStory => ({
+          eyebrow: str(s?.eyebrow),
+          title: str(s?.title),
+          description: str(s?.description),
+          image: mediaUrl(s?.image),
         }),
       ),
     },
     insideTheBox: {
-      heading: str(d.insideTheBoxHeading),
-      subheading: "",
-      intro: str(d.insideTheBoxIntro),
-      items: (Array.isArray(d.insideTheBox) ? d.insideTheBox : []).map(
-        (b: AnyRecord) => ({
+      eyebrow: str(boxIntro.eyebrow),
+      title: str(boxIntro.title),
+      introTitle: str(boxIntroSection.title),
+      introDescription: str(boxIntroSection.description),
+      smartPenDescription: str(d.smart_pen_description),
+      items: (Array.isArray(d.inside_box) ? d.inside_box : []).map(
+        (b: AnyRecord): BoxItem => ({
           title: str(b?.title),
           description: str(b?.description),
           specs: asStringList(b?.specs),
+          media: mediaUrl(b?.media),
+        }),
+      ),
+      mediaFiles: (Array.isArray(d.media_files) ? d.media_files : []).map(
+        (m: AnyRecord): MediaChip => ({
+          chipText: optionalStr(m?.chip_text),
+          media: mediaList(m?.media_file),
         }),
       ),
     },
     colors: {
-      heading: str(d.colorsHeading),
-      options: (Array.isArray(d.colors) ? d.colors : []).map((c: AnyRecord) => ({
-        name: str(c?.name),
-        tagline: str(c?.tagline),
-        color: optionalStr(c?.color),
-      })),
+      options: (Array.isArray(d.colors) ? d.colors : []).map(
+        (c: AnyRecord): ColorOption => ({
+          name: str(c?.name),
+          tagline: str(c?.tagline),
+          color: optionalStr(c?.color),
+          image: mediaUrl(c?.image),
+        }),
+      ),
     },
     signup: {
       heading: str(signup.heading),
@@ -99,10 +183,13 @@ export function mapHome(data: unknown): HomeContent {
       button: str(signup.buttonLabel),
     },
     footer: {
-      navigationHeading: "Navigation",
-      year: str(d.footerYear),
-      copyright: str(d.footerCopyright),
-      credits: asStringList(d.footerCredits),
+      text:
+        str(f.footer_text) ||
+        "NŌTA creates tools that respect the way people think and write. Natural handwriting, quietly connected to digital structure.",
+      navTitle: str(f.nav_title) || "Navigation",
+      nav: footerNav.length > 0 ? footerNav : DEFAULT_NAV,
+      year: str(f.Year) || "2026",
+      footnote: str(f.footnote) || "@2026 Nōta Team",
     },
   };
 }

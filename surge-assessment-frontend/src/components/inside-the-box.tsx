@@ -1,51 +1,89 @@
-import MediaPlaceholder from "@/components/media-placeholder";
 import type { HomeContent } from "@/lib/home-content";
 
 type InsideTheBoxProps = HomeContent["insideTheBox"];
 
 export default function InsideTheBox({
-  heading,
-  intro,
+  eyebrow,
+  title,
+  introTitle,
+  introDescription,
+  smartPenDescription,
   items,
+  mediaFiles,
 }: InsideTheBoxProps) {
   return (
-    <section id="inside-the-box" className="border-t border-white/10">
-      <div className="mx-auto max-w-6xl px-6 py-24">
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          {heading}
+    <section id="inside-the-box" className="scroll-mt-20 bg-white text-black">
+      <div className="mx-auto max-w-[1400px] px-6 py-24 md:py-32">
+        <h2 className="font-serif text-6xl leading-none md:text-8xl">
+          {eyebrow}
+          <br />
+          {title}
         </h2>
-        <p className="mt-4 max-w-2xl text-lg text-white/60">{intro}</p>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2 md:items-end">
+          <div>
+            <h3 className="text-2xl font-semibold">{introTitle}</h3>
+            <p className="mt-4 max-w-md text-black/60">{introDescription}</p>
+          </div>
+          {smartPenDescription ? (
+            <p className="font-serif text-2xl leading-snug md:text-3xl">
+              {smartPenDescription}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2">
           {items.map((item) => (
-            <article
-              key={item.title}
-              className="rounded-2xl border border-white/10 bg-white/[0.02] p-8"
-            >
-              <MediaPlaceholder
-                label={`${item.title} visual`}
-                className="mb-6 aspect-square"
-              />
-              <h3 className="text-xl font-semibold">{item.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-white/60">
+            <article key={item.title}>
+              {item.media ? (
+                <img
+                  src={item.media}
+                  alt={item.title}
+                  className="aspect-[4/3] w-full rounded-2xl object-cover"
+                />
+              ) : null}
+              <h3 className="mt-6 text-xl font-semibold">{item.title}</h3>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-black/60">
                 {item.description}
               </p>
-              {item.specs.length > 0 && (
-                <ul className="mt-4 space-y-2">
-                  {item.specs.map((spec) => (
-                    <li
-                      key={spec}
-                      className="flex gap-3 text-sm text-white/70"
-                    >
-                      <span className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-white/40" />
-                      {spec}
-                    </li>
-                  ))}
-                </ul>
-              )}
             </article>
           ))}
         </div>
+
+        {mediaFiles.length > 0 ? (
+          <div className="mt-20 grid grid-cols-1 gap-10 md:grid-cols-3">
+            {mediaFiles.map((entry, index) => {
+              const media = entry.media[0];
+              if (!media) return null;
+              const isVideo = (media.mime ?? "").startsWith("video");
+              return (
+                <figure key={index} className="relative">
+                  {isVideo ? (
+                    <video
+                      src={media.url}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="aspect-[4/3] w-full rounded-2xl object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={media.url}
+                      alt={entry.chipText ?? ""}
+                      className="aspect-[4/3] w-full rounded-2xl object-cover"
+                    />
+                  )}
+                  {entry.chipText ? (
+                    <figcaption className="absolute bottom-4 left-4 rounded-full bg-white/90 px-4 py-1.5 text-xs font-medium text-black backdrop-blur">
+                      {entry.chipText}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     </section>
   );

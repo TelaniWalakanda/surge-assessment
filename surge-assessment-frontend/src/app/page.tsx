@@ -2,7 +2,6 @@ import Header from "@/components/header";
 import Hero from "@/components/hero";
 import Specifications from "@/components/specifications";
 import Audience from "@/components/audience";
-import About from "@/components/about";
 import SmartPaper from "@/components/smart-paper";
 import InsideTheBox from "@/components/inside-the-box";
 import Colors from "@/components/colors";
@@ -14,9 +13,35 @@ import type { HomeContent } from "@/lib/home-content";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Populate every nested component + media field the home page reads from.
+ * Strapi v5 does not expand these automatically with a bare `populate=*`.
+ */
+const HOME_POPULATE = [
+  "populate[hero][populate]=*",
+  "populate[specificationsSection][populate][specifications_group][populate][specification_text]=true",
+  "populate[specificationsSection][populate][image]=true",
+  "populate[audienceSection][populate][audiences]=true",
+  "populate[audienceSection][populate][image]=true",
+  "populate[paperIntro]=true",
+  "populate[featuresSection][populate][image]=true",
+  "populate[boxIntro]=true",
+  "populate[inside_box_section][populate][media]=true",
+  "populate[inside_box][populate][media]=true",
+  "populate[media_files][populate][media_file]=true",
+  "populate[colors][populate][image]=true",
+  "populate[signup]=true",
+  "populate[seo][populate][shareImage]=true",
+].join("&");
+
 async function loadHome(): Promise<HomeContent> {
-  const res = await fetchAPI<{ data: unknown }>("/home?populate=*");
-  return mapHome(res?.data);
+  const [home, header, footer] = await Promise.all([
+    fetchAPI<{ data: unknown }>(`/home?${HOME_POPULATE}`),
+    fetchAPI<{ data: unknown }>("/header?populate=*").catch(() => null),
+    fetchAPI<{ data: unknown }>("/footer?populate=*").catch(() => null),
+  ]);
+
+  return mapHome(home?.data, header?.data, footer?.data);
 }
 
 export default async function Home() {
@@ -24,9 +49,9 @@ export default async function Home() {
 
   if (!content) {
     return (
-      <main className="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center px-6 text-center">
+      <main className="flex min-h-screen flex-col items-center justify-center px-6 text-center">
         <h1 className="text-2xl font-semibold">Content unavailable</h1>
-        <p className="mt-3 text-sm text-white/60">
+        <p className="mt-3 max-w-xl text-sm text-white/60">
           The home page could not be loaded from the CMS. Make sure Strapi is
           running, the Public role has “find” access to the Home single type,
           and it has content.
@@ -37,28 +62,19 @@ export default async function Home() {
 
   return (
     <>
-      <Header
-        brand={content.brand}
-        tagline={content.brandTagline}
-        nav={content.nav}
-      />
+      <Header {...content.header} />
       <main>
         <Hero {...content.hero} />
-        <div className="relative z-10 bg-[#0a0a0b]">
+        <div className="relative z-10">
           <Specifications {...content.specifications} />
           <Audience {...content.audience} />
-          <About {...content.about} />
           <SmartPaper {...content.smartPaper} />
           <InsideTheBox {...content.insideTheBox} />
           <Colors {...content.colors} />
           <Signup {...content.signup} />
         </div>
       </main>
-      <Footer
-        brand={content.brand}
-        nav={content.nav}
-        {...content.footer}
-      />
+      <Footer {...content.footer} />
     </>
   );
 }
