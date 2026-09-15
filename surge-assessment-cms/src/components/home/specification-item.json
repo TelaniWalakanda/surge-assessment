@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_home_specification_items",
+  "info": {
+    "displayName": "Specification Item"
+  },
+  "options": {},
+  "attributes": {
+    "specification": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

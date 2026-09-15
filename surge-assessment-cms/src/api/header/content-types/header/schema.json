@@ -1,0 +1,52 @@
+{
+  "kind": "singleType",
+  "collectionName": "headers",
+  "info": {
+    "singularName": "header",
+    "pluralName": "headers",
+    "displayName": "Header"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "nav_link": {
+      "type": "component",
+      "component": "shared.nav-links",
+      "repeatable": true
+    },
+    "product_name": {
+      "type": "string"
+    },
+    "product_card_text": {
+      "type": "string"
+    },
+    "price": {
+      "type": "string"
+    },
+    "cta_text": {
+      "type": "string"
+    },
+    "product_card_logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  }
+}

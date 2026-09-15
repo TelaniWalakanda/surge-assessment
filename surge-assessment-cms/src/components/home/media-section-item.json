@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_home_media_section_items",
+  "info": {
+    "displayName": "Media Section Item"
+  },
+  "options": {},
+  "attributes": {
+    "media_file": {
+      "type": "media",
+      "multiple": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "chip_text": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

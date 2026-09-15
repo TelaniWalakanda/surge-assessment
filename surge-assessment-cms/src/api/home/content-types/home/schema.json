@@ -14,85 +14,66 @@
   "attributes": {
     "hero": {
       "type": "component",
-      "repeatable": false,
-      "component": "home.hero"
+      "component": "home.hero",
+      "repeatable": false
     },
-    "specificationsLabel": {
-      "type": "string"
-    },
-    "specificationsHeading": {
-      "type": "string"
-    },
-    "specifications": {
+    "specificationsSection": {
       "type": "component",
-      "repeatable": true,
-      "component": "home.spec-group"
+      "component": "home.specifications",
+      "repeatable": false
     },
-    "audienceHeading": {
-      "type": "string"
+    "audienceSection": {
+      "type": "component",
+      "component": "home.audience-section",
+      "repeatable": false
     },
-    "audienceIntro": {
+    "paperIntro": {
+      "type": "component",
+      "component": "home.intro-section",
+      "repeatable": false
+    },
+    "featuresSection": {
+      "type": "component",
+      "component": "home.feature-stories-section",
+      "repeatable": true
+    },
+    "boxIntro": {
+      "type": "component",
+      "component": "home.intro-section",
+      "repeatable": false
+    },
+    "inside_box_section": {
+      "type": "component",
+      "component": "home.box-item",
+      "repeatable": false
+    },
+    "smart_pen_description": {
       "type": "text"
     },
-    "audience": {
+    "inside_box": {
       "type": "component",
-      "repeatable": true,
-      "component": "home.audience-card"
+      "component": "home.box-item",
+      "repeatable": true
     },
-    "aboutHeading": {
-      "type": "string"
-    },
-    "aboutParagraphs": {
-      "type": "json"
-    },
-    "smartPaperHeadingTop": {
-      "type": "string"
-    },
-    "smartPaperHeadingBottom": {
-      "type": "string"
-    },
-    "smartPaper": {
+    "media_files": {
       "type": "component",
-      "repeatable": true,
-      "component": "home.feature"
-    },
-    "insideTheBoxHeading": {
-      "type": "string"
-    },
-    "insideTheBoxIntro": {
-      "type": "text"
-    },
-    "insideTheBox": {
-      "type": "component",
-      "repeatable": true,
-      "component": "home.box-item"
-    },
-    "colorsHeading": {
-      "type": "string"
+      "component": "home.media-section-item",
+      "repeatable": true
     },
     "colors": {
       "type": "component",
-      "repeatable": true,
-      "component": "home.color-option"
+      "component": "home.color-option",
+      "repeatable": true
     },
     "signup": {
       "type": "component",
-      "repeatable": false,
-      "component": "home.signup"
-    },
-    "footerYear": {
-      "type": "string"
-    },
-    "footerCopyright": {
-      "type": "string"
-    },
-    "footerCredits": {
-      "type": "json"
+      "component": "home.signup",
+      "repeatable": false
     },
     "seo": {
       "type": "component",
-      "repeatable": false,
-      "component": "shared.seo"
+      "component": "shared.seo",
+      "repeatable": false
     }
   }
 }

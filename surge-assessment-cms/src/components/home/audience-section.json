@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_home_audience_sections",
+  "info": {
+    "displayName": "Audience Section"
+  },
+  "options": {},
+  "attributes": {
+    "introductionText": {
+      "type": "text"
+    },
+    "eyebrow": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "audiences": {
+      "type": "component",
+      "component": "home.audience-card",
+      "repeatable": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

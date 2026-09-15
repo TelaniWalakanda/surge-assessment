@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_home_specifications",
+  "info": {
+    "displayName": "Specifications Section"
+  },
+  "options": {},
+  "attributes": {
+    "specificationsLabel": {
+      "type": "string"
+    },
+    "specificationsHeading": {
+      "type": "string"
+    },
+    "specifications_group": {
+      "type": "component",
+      "component": "home.spec-group",
+      "repeatable": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

@@ -576,6 +576,38 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiFooterFooter extends Struct.SingleTypeSchema {
+  collectionName: 'footers';
+  info: {
+    displayName: 'Footer';
+    pluralName: 'footers';
+    singularName: 'footer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    footer_text: Schema.Attribute.Text;
+    footnote: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::footer.footer'
+    > &
+      Schema.Attribute.Private;
+    nav_link: Schema.Attribute.Component<'shared.nav-links', true>;
+    nav_title: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Year: Schema.Attribute.String;
+  };
+}
+
 export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   collectionName: 'globals';
   info: {
@@ -608,6 +640,42 @@ export interface ApiGlobalGlobal extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiHeaderHeader extends Struct.SingleTypeSchema {
+  collectionName: 'headers';
+  info: {
+    displayName: 'Header';
+    pluralName: 'headers';
+    singularName: 'header';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    cta_text: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::header.header'
+    > &
+      Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    nav_link: Schema.Attribute.Component<'shared.nav-links', true>;
+    price: Schema.Attribute.String;
+    product_card_logo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    product_card_text: Schema.Attribute.String;
+    product_name: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiHomeHome extends Struct.SingleTypeSchema {
   collectionName: 'homes';
   info: {
@@ -620,35 +688,32 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    aboutHeading: Schema.Attribute.String;
-    aboutParagraphs: Schema.Attribute.JSON;
-    audience: Schema.Attribute.Component<'home.audience-card', true>;
-    audienceHeading: Schema.Attribute.String;
-    audienceIntro: Schema.Attribute.Text;
+    audienceSection: Schema.Attribute.Component<'home.audience-section', false>;
+    boxIntro: Schema.Attribute.Component<'home.intro-section', false>;
     colors: Schema.Attribute.Component<'home.color-option', true>;
-    colorsHeading: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    footerCopyright: Schema.Attribute.String;
-    footerCredits: Schema.Attribute.JSON;
-    footerYear: Schema.Attribute.String;
+    featuresSection: Schema.Attribute.Component<
+      'home.feature-stories-section',
+      true
+    >;
     hero: Schema.Attribute.Component<'home.hero', false>;
-    insideTheBox: Schema.Attribute.Component<'home.box-item', true>;
-    insideTheBoxHeading: Schema.Attribute.String;
-    insideTheBoxIntro: Schema.Attribute.Text;
+    inside_box: Schema.Attribute.Component<'home.box-item', true>;
+    inside_box_section: Schema.Attribute.Component<'home.box-item', false>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::home.home'> &
       Schema.Attribute.Private;
+    media_files: Schema.Attribute.Component<'home.media-section-item', true>;
+    paperIntro: Schema.Attribute.Component<'home.intro-section', false>;
     publishedAt: Schema.Attribute.DateTime;
     seo: Schema.Attribute.Component<'shared.seo', false>;
     signup: Schema.Attribute.Component<'home.signup', false>;
-    smartPaper: Schema.Attribute.Component<'home.feature', true>;
-    smartPaperHeadingBottom: Schema.Attribute.String;
-    smartPaperHeadingTop: Schema.Attribute.String;
-    specifications: Schema.Attribute.Component<'home.spec-group', true>;
-    specificationsHeading: Schema.Attribute.String;
-    specificationsLabel: Schema.Attribute.String;
+    smart_pen_description: Schema.Attribute.Text;
+    specificationsSection: Schema.Attribute.Component<
+      'home.specifications',
+      false
+    >;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1170,7 +1235,9 @@ declare module '@strapi/strapi' {
       'api::article.article': ApiArticleArticle;
       'api::author.author': ApiAuthorAuthor;
       'api::category.category': ApiCategoryCategory;
+      'api::footer.footer': ApiFooterFooter;
       'api::global.global': ApiGlobalGlobal;
+      'api::header.header': ApiHeaderHeader;
       'api::home.home': ApiHomeHome;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

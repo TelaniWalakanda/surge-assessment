@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "footers",
+  "info": {
+    "singularName": "footer",
+    "pluralName": "footers",
+    "displayName": "Footer"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "footer_text": {
+      "type": "text"
+    },
+    "nav_link": {
+      "type": "component",
+      "component": "shared.nav-links",
+      "repeatable": true
+    },
+    "nav_title": {
+      "type": "string"
+    },
+    "Year": {
+      "type": "string"
+    },
+    "footnote": {
+      "type": "string"
+    }
+  }
+}
