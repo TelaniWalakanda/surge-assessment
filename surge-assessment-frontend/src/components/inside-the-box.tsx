@@ -106,16 +106,17 @@ export default function InsideTheBox({
 
         <div className="mt-20 grid grid-cols-1 gap-12 md:grid-cols-2 px-6 h-[100vh]">
           {items.map((item) => (
-            <article key={item.title}>
-              <h3 className="mt-6 text-xl font-semibold text-center">{item.title}</h3>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-black/60 float-right">
+            <article key={item.title} className="relative flex h-full w-full flex-col overflow-hidden bg-white shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+              <div className="absolute right-0"><h3 className="mt-6 font-sans text-2xl font-semibold text-left">{item.title}</h3>
+              <p className="mt-3 max-w-md font-sans text-lg leading-relaxed text-black/60 float-right">
                 {item.description}
-              </p>
+              </p></div>
+              
               {item.media ? (
                 <img
                   src={item.media}
                   alt={item.title}
-                  className="w-full object-cover"
+                  className="w-full object-cover h-[80%]"
                 />
               ) : null}
             </article>
