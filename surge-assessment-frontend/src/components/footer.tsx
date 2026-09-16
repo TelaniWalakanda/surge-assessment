@@ -5,7 +5,7 @@ type FooterProps = HomeContent["footer"];
 export default function Footer({ text, navTitle, nav, year, footnote }: FooterProps) {
   return (
     <footer className="bg-black text-white">
-      <div className="mx-auto max-w-[1400px] px-6 py-16">
+      <div className="mx-auto px-6 py-16">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
           <p className="max-w-md font-serif text-2xl leading-snug md:text-3xl">
             {text}

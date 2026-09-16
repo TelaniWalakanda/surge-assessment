@@ -51,6 +51,11 @@ export type ColorOption = {
   image: string | null;
 };
 
+export type SectionIntroContent = {
+  eyebrow: string;
+  title: string;
+};
+
 export type HomeContent = {
   header: {
     logo: string | null;
@@ -60,6 +65,7 @@ export type HomeContent = {
     price: string;
     ctaText: string;
     productCardLogo: string | null;
+    mobileImage: string | null;
   };
   hero: {
     eyebrow: string;
@@ -96,10 +102,13 @@ export type HomeContent = {
     title: string;
     introTitle: string;
     introDescription: string;
+    introMedia: string | null;
     smartPenDescription: string;
     items: BoxItem[];
     mediaFiles: MediaChip[];
   };
+  paperIntro: SectionIntroContent;
+  boxIntro: SectionIntroContent;
   colors: {
     options: ColorOption[];
   };

@@ -110,6 +110,7 @@ export function mapHome(
       price: hasHeader ? str(h.price) : str(hero.price),
       ctaText: hasHeader ? str(h.cta_text) : str(hero.cta) || "Order",
       productCardLogo: mediaUrl(h.product_card_logo),
+      mobileImage: mediaUrl(h.header_mobile_image),
     },
     hero: {
       eyebrow: str(hero.eyebrow),
@@ -168,11 +169,16 @@ export function mapHome(
         }),
       ),
     },
+    paperIntro: {
+      eyebrow: str(paperIntro.eyebrow),
+      title: str(paperIntro.title),
+    },
     insideTheBox: {
       eyebrow: str(boxIntro.eyebrow),
       title: str(boxIntro.title),
       introTitle: str(boxIntroSection.title),
       introDescription: str(boxIntroSection.description),
+      introMedia: mediaUrl(boxIntroSection.media),
       smartPenDescription: str(d.smart_pen_description),
       items: (Array.isArray(d.inside_box) ? d.inside_box : []).map(
         (b: AnyRecord): BoxItem => ({
@@ -188,6 +194,10 @@ export function mapHome(
           media: mediaList(m?.media_file),
         }),
       ),
+    },
+    boxIntro: {
+      eyebrow: str(boxIntro.eyebrow),
+      title: str(boxIntro.title),
     },
     colors: {
       options: (Array.isArray(d.colors) ? d.colors : []).map(

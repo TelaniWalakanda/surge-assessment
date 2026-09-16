@@ -127,7 +127,7 @@ export default function Specifications({
             className="pointer-events-none absolute left-[50%] top-[30%] z-0 hidden h-[100%] w-auto object-contain lg:block"
           />
         ) : null}
-        <div className="mx-auto flex h-full max-w-[1400px] flex-col px-6 py-20 lg:py-16">
+        <div className="mx-auto flex h-full flex-col px-6 md:px-11 py-20 lg:py-16">
           <div className="relative z-10 text-center">
             <p className="font-serif text-5xl leading-none text-black/50 lg:text-7xl">
               {label}

@@ -5,8 +5,8 @@ import Audience from "@/components/audience";
 import SmartPaper from "@/components/smart-paper";
 import InsideTheBox from "@/components/inside-the-box";
 import Colors from "@/components/colors";
-import Signup from "@/components/signup";
 import Footer from "@/components/footer";
+import SectionIntro from "@/components/section-intro";
 import { mapHome } from "@/lib/home-mapper";
 import { fetchAPI } from "@/lib/strapi";
 import type { HomeContent } from "@/lib/home-content";
@@ -69,10 +69,17 @@ export default async function Home() {
         <div className="relative z-10">
           <Specifications {...content.specifications} />
           <Audience {...content.audience} />
+          <SectionIntro
+            eyebrow={content.paperIntro.eyebrow}
+            title={content.paperIntro.title}
+          />
           <SmartPaper {...content.smartPaper} />
+          <SectionIntro
+            eyebrow={content.boxIntro.eyebrow}
+            title={content.boxIntro.title}
+          />
           <InsideTheBox {...content.insideTheBox} />
           <Colors {...content.colors} />
-          <Signup {...content.signup} />
         </div>
       </main>
       <Footer {...content.footer} />
