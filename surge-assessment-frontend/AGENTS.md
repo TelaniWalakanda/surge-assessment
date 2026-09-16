@@ -117,6 +117,38 @@ InsideTheBox → Colors → Footer.
   Mobile: horizontal `snap-x` carousel. Refs must be mounted in both branches
   because the scroll effect runs once with `[]` deps.
 - `colors.tsx` — same discrete stepping as `smart-paper`, 400vh on desktop.
+- `audience-media.tsx` — the client half of the audience section (the section
+  itself stays a server component and just passes `video` / `image` down). The
+  media box is right-aligned inside a `justify-end` wrapper and is capped at
+  `max-h-[70vh]` with `object-cover`, so a wide clip is cropped rather than
+  stretched. It has two scroll-linked phases, both measured from the wrapper's
+  `getBoundingClientRect().top` (`vh` = viewport height). **Enter:** `scale 0.7 →
+  1`, `ease: none`, as its top travels from `vh` (viewport bottom) to `0.3vh`.
+  **Exit:** `scale 1 → 0.65`, `ease: none`, as its top continues from `0.3vh` to
+  `-0.7vh`, i.e. it shrinks again on the way to the next section. The two are
+  multiplied, which is safe because the exit term is 0 throughout the enter
+  phase. Progress is recomputed on every `scroll` via `requestAnimationFrame`, so
+  both phases run backwards when you scroll up.
+  The reference also translates the video by `-17.5vh → 0` during its enter
+  phase. That is deliberately **not** done here: the reference's video sits in a
+  pinned 100vh camera inside a 180vh track, whereas ours is in normal flow with
+  only the `mt-16` (64px) gap above it, so a `-17.5vh` offset pulls the media up
+  over the audience text. Keep the box's layout position and animate only
+  `scale`, or the media will overlap the copy above it.
+  The scale values are the reference's own (its `SCALE` keyframes on
+  `.who__video`). The `transform-origin` is switched per phase from JS: `100% 0%`
+  while the media is still growing in, so it enters anchored to the right edge
+  like the reference, and `50% 50%` once the exit phase starts, so it shrinks
+  toward its own middle instead of drifting right. The switch is seamless
+  because it only happens where the enter phase has finished, i.e. where the
+  scale is exactly 1 and the transform is the identity, so the origin has no
+  effect at that instant. Do not put an `origin-*` class on the box — the inline
+  style would win and the phases would look the same. The reference's exit phase
+  also fades to 0.2 opacity and slides `-16.63vw`, which is deliberately not
+  implemented here.
+  `prefers-reduced-motion: reduce` clears the transform entirely.
+  The `max-height` has to sit on the `<video>` / `<img>` itself: a `max-height`
+  on the wrapper `div` would not shrink the media, it would only let it overflow.
 - `inside-the-box.tsx` — the smart-pen paragraph is revealed letter by letter as
   it crosses the viewport.
 - `inside-the-box-media.tsx` — lays the CMS `media_files` out as a fixed bento
