@@ -110,6 +110,7 @@ export function mapHome(
       price: hasHeader ? str(h.price) : str(hero.price),
       ctaText: hasHeader ? str(h.cta_text) : str(hero.cta) || "Order",
       productCardLogo: mediaUrl(h.product_card_logo),
+      mobileImage: mediaUrl(h.header_mobile_image),
     },
     hero: {
       eyebrow: str(hero.eyebrow),

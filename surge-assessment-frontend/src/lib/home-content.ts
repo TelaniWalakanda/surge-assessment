@@ -65,6 +65,7 @@ export type HomeContent = {
     price: string;
     ctaText: string;
     productCardLogo: string | null;
+    mobileImage: string | null;
   };
   hero: {
     eyebrow: string;
