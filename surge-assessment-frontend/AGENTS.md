@@ -93,7 +93,14 @@ InsideTheBox → Colors → Footer.
 
 - `preloader.tsx` — counter 0 → 80% while assets load, 80 → 100% on the window
   `load` event, then fades (250ms delay, unmounts at 850ms). Its background
-  repeats the hero's radial gradient so the reveal is seamless.
+  repeats the hero's radial gradient so the reveal is seamless. It also forces
+  the page back to the hero on every refresh: it sets
+  `history.scrollRestoration = "manual"` and calls `window.scrollTo(0, 0)` (with
+  `scroll-behavior` temporarily switched to `auto`) on mount, again on
+  `pageshow`/`load` plus 200ms later, and once the counter completes — the
+  browser's own scroll restoration runs after the first effect, so a single
+  early reset does not stick. A reset is skipped when the URL carries a hash, so
+  deep links still win.
 - `hero-pen.tsx` — desktop only: a 270vh track with a sticky 100vh camera, and a
   scroll-scrubbed Lottie (`public/animations/hero_animation.json`, ~1.8MB, never
   loaded below 1024px) plus a slight camera push-in. Mobile shows the static
