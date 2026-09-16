@@ -34,19 +34,6 @@
         "videos",
         "audios"
       ]
-    },
-    "hero_mobile_navigation_image": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "hero_desktop_animation_json": {
-      "type": "json"
     }
   }
 }

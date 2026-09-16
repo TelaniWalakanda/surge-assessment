@@ -93,11 +93,7 @@ export interface HomeHero extends Struct.ComponentSchema {
     cta: Schema.Attribute.String;
     eyebrow: Schema.Attribute.String;
     headline: Schema.Attribute.String;
-    hero_desktop_animation_json: Schema.Attribute.JSON;
     hero_mobile_bg_image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
-    hero_mobile_navigation_image: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
     price: Schema.Attribute.String;
