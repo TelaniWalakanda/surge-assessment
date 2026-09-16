@@ -15,10 +15,6 @@ import type { HomeContent } from "@/lib/home-content";
 
 export const dynamic = "force-dynamic";
 
-/**
- * Populate every nested component + media field the home page reads from.
- * Strapi v5 does not expand these automatically with a bare `populate=*`.
- */
 const HOME_POPULATE = [
   "populate[hero][populate]=*",
   "populate[specificationsSection][populate][specifications_group][populate][specification_text]=true",
@@ -68,19 +64,9 @@ export default async function Home() {
       <Header {...content.header} />
       <main>
         <Hero {...content.hero} />
-        {/*
-          The wipe is `margin-top: -100vh`, so it starts inside the hero's last
-          pinned viewport and stays pinned over it while the curtains rise —
-          it must sit immediately after the hero for that overlap to line up.
-        */}
         <SteppedWipeSection />
         <div className="relative z-10">
           <Specifications {...content.specifications} />
-          {/*
-            Sits inside this wrapper (and after the specs section) so it paints
-            over it: the wrapper is a stacking context, so a later positioned
-            sibling is exactly the layer that must cover the section before it.
-          */}
           <BarsWipeSection />
           <Audience {...content.audience} />
           <SectionIntro

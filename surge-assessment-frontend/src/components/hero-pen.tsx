@@ -9,22 +9,11 @@ type LottiePlayerElement = HTMLElement & {
 };
 
 type HeroPenProps = {
-  /** First headline line (from CMS `hero.eyebrow`). */
   eyebrow?: string;
-  /** Second headline line (from CMS `hero.headline`). */
   headline?: string;
-  /** Static vertical pen shot used as the hero image on mobile. */
   mobileBgImage?: string | null;
 };
 
-/**
- * Scroll-driven hero animation (desktop only).
- *
- * On desktop the hero is pinned with `position: sticky` and the Lottie pen
- * rotation is scrubbed with scroll, with the headline bottom-left. On mobile
- * the heavy animation is skipped entirely: the static `hero_mobile_bg_image`
- * is centered (zoomed out) with the headline centered below it.
- */
 export default function HeroPen({
   eyebrow,
   headline,
@@ -36,7 +25,6 @@ export default function HeroPen({
   const totalFramesRef = useRef(76);
 
   useEffect(() => {
-    // Desktop only — never load the ~1.8MB animation on mobile.
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
 
     let disposed = false;
@@ -59,7 +47,6 @@ export default function HeroPen({
         player.seek(frame);
       }
 
-      // Gentle "camera push-in" that mirrors the reference cover.
       if (host) {
         const scale = 1.05 + progress * 0.1;
         const driftY = progress * 6;
@@ -128,7 +115,6 @@ export default function HeroPen({
             "radial-gradient(at 50% 0%, rgb(150, 156, 166) 0%, rgb(58, 60, 64) 80%)",
         }}
       >
-        {/* Mobile: zoomed-out pen stuck to the top, headline centered below. */}
         <div className="flex h-full flex-col pt-20 md:hidden">
           <div className="flex justify-center overflow-hidden">
             {mobileBgImage ? (
@@ -149,7 +135,6 @@ export default function HeroPen({
           </div>
         </div>
 
-        {/* Desktop: scroll-scrubbed Lottie with the headline bottom-left. */}
         <div
           ref={hostRef}
           aria-hidden="true"

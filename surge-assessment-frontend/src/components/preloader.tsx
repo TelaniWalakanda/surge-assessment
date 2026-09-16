@@ -2,14 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/**
- * Full-screen preloader shown on page load.
- *
- * A counter runs 0% → 80% while the page assets load, then 80% → 100% once
- * the window `load` event fires, before the overlay fades out to reveal the
- * hero. The background matches the hero's radial gradient so the transition
- * feels seamless.
- */
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
   const [fading, setFading] = useState(false);
@@ -47,12 +39,10 @@ export default function Preloader() {
       }
 
       if (current < 100) {
-        // Waiting for the load event.
         rafId = requestAnimationFrame(tick);
         return;
       }
 
-      // Complete: fade out, then unmount.
       fadeTimer = window.setTimeout(() => setFading(true), 250);
       unmountTimer = window.setTimeout(() => setUnmounted(true), 850);
     };

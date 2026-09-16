@@ -20,10 +20,8 @@ function StorySlide({
         bg-[#101011] text-white
       `}
     >
-      {/* Ambient background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.055),transparent_42%)]" />
 
-      {/* Image */}
       {story.image ? (
         <div
           className={`
@@ -63,7 +61,6 @@ function StorySlide({
         </div>
       ) : null}
 
-      {/* Eyebrow — top left */}
       {story.eyebrow ? (
         <p
           className={`
@@ -96,7 +93,6 @@ function StorySlide({
         </p>
       ) : null}
 
-      {/* Title + description — bottom right */}
       <div
         className="
           absolute
@@ -181,21 +177,6 @@ function StorySlide({
   );
 }
 
-/**
- * NŌTA-inspired scroll story carousel.
- *
- * Desktop:
- * - Sticky viewport
- * - One story per scroll step
- * - Editorial product presentation
- * - Large centered imagery
- * - Minimal counter + progress
- *
- * Mobile:
- * - Horizontal touch carousel
- * - Snap scrolling
- * - Manual navigation
- */
 export default function SmartPaper({
   stories,
 }: SmartPaperProps) {
@@ -210,9 +191,6 @@ export default function SmartPaper({
   const activeRef = useRef(0);
   const isDesktopRef = useRef(false);
 
-  /*
-   * Desktop scroll controller
-   */
   useEffect(() => {
     if (!count) return;
 
@@ -249,9 +227,6 @@ export default function SmartPaper({
         Math.min(1, rawProgress)
       );
 
-      /*
-       * Each story occupies one scroll step.
-       */
       const index = Math.min(
         count - 1,
         Math.round(progress * (count - 1))
@@ -311,9 +286,6 @@ export default function SmartPaper({
     };
   }, [count]);
 
-  /*
-   * Manual navigation
-   */
   const goTo = (index: number) => {
     const next = Math.max(
       0,
@@ -374,7 +346,6 @@ export default function SmartPaper({
           : undefined
       }
     >
-      {/* Sticky viewport */}
       <div
         className={
           isDesktop
@@ -392,7 +363,6 @@ export default function SmartPaper({
             `
         }
       >
-        {/* Slides */}
         <div
           ref={trackRef}
           className={`
@@ -434,7 +404,6 @@ export default function SmartPaper({
           ))}
         </div>
 
-        {/* Bottom navigation */}
         {count > 1 && (
           <div
             className="
@@ -451,7 +420,6 @@ export default function SmartPaper({
               lg:px-20
             "
           >
-            {/* Progress */}
             <div
               className="
                 absolute

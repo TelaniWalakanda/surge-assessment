@@ -64,7 +64,6 @@ export default function Colors({ options }: ColorsProps) {
       const progress =
         total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
 
-      // Step through one color at a time instead of a continuous chain.
       const count = countRef.current;
       const index = Math.min(count - 1, Math.round(progress * (count - 1)));
       track.style.transform = `translateX(${-index * 100}vw)`;

@@ -29,7 +29,6 @@ function RevealText({ text }: { text: string }) {
       );
 
       spans.forEach((span, index) => {
-        // Typewriter reveal: each letter flips to black as its threshold passes.
         const threshold = (index + 1) / spans.length;
         const value = progress >= threshold ? 0 : 221;
         span.style.color = `rgb(${value}, ${value}, ${value})`;

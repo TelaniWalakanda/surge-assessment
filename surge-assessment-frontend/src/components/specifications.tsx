@@ -49,13 +49,11 @@ export default function Specifications({
       const progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0;
       const groupCount = groupRefs.current.length;
 
-      // The header disappears while the white specification scene takes over.
       section.toggleAttribute(
         "data-header-hidden",
         progress > 0.04 && progress < 0.96,
       );
 
-      // First phase: white staircase curtains rise over the previous hero.
       const curtainProgress = Math.min(1, Math.max(0, progress / 0.2));
       const curtainOpacity =
         progress < 0.08
@@ -77,7 +75,6 @@ export default function Specifications({
         brick.style.transform = `translate3d(0, ${(1 - eased) * 100}%, 0)`;
       });
 
-      // Second phase: reveal the pen rising from the bottom into position.
       if (imageRef.current) {
         const local = Math.min(1, Math.max(0, (progress - 0.16) / 0.28));
         const eased = 1 - Math.pow(1 - local, 3);

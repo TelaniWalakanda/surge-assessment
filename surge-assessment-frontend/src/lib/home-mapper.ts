@@ -10,11 +10,6 @@ import type {
   Specification,
 } from "@/lib/home-content";
 
-/**
- * Maps the Strapi `home`, `header` and `footer` single-type REST responses
- * into the `HomeContent` shape consumed by the section components.
- */
-
 const str = (value: unknown): string =>
   typeof value === "string" && value.length > 0 ? value : "";
 
