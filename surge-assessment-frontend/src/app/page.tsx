@@ -1,6 +1,5 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
-import ShapeWipe from "@/components/shape-wipe";
 import Specifications from "@/components/specifications";
 import Audience from "@/components/audience";
 import SmartPaper from "@/components/smart-paper";
@@ -68,7 +67,6 @@ export default async function Home() {
       <main>
         <Hero {...content.hero} />
         <div className="relative z-10">
-          <ShapeWipe />
           <Specifications {...content.specifications} />
           <Audience {...content.audience} />
           <SectionIntro
