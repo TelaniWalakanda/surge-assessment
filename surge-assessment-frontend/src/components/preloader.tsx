@@ -2,14 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-/**
- * Full-screen preloader shown on page load.
- *
- * A counter runs 0% → 80% while the page assets load, then 80% → 100% once
- * the window `load` event fires, before the overlay fades out to reveal the
- * hero. The background matches the hero's radial gradient so the transition
- * feels seamless.
- */
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
   const [fading, setFading] = useState(false);
@@ -18,6 +10,27 @@ export default function Preloader() {
   const progressRef = useRef(0);
 
   useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    const resetToHero = () => {
+      if (window.location.hash) return;
+      const root = document.documentElement;
+      const previousBehavior = root.style.scrollBehavior;
+      root.style.scrollBehavior = "auto";
+      window.scrollTo(0, 0);
+      root.style.scrollBehavior = previousBehavior;
+    };
+
+    let settleTimer = 0;
+
+    const settle = () => {
+      resetToHero();
+      if (settleTimer) window.clearTimeout(settleTimer);
+      settleTimer = window.setTimeout(resetToHero, 200);
+    };
+
     let rafId = 0;
     let fadeTimer = 0;
     let unmountTimer = 0;
@@ -25,6 +38,7 @@ export default function Preloader() {
 
     const handleLoad = () => {
       targetRef.current = 100;
+      settle();
     };
 
     if (document.readyState === "complete") {
@@ -32,6 +46,9 @@ export default function Preloader() {
     } else {
       window.addEventListener("load", handleLoad);
     }
+
+    settle();
+    window.addEventListener("pageshow", settle);
 
     const tick = () => {
       const current = progressRef.current;
@@ -47,12 +64,11 @@ export default function Preloader() {
       }
 
       if (current < 100) {
-        // Waiting for the load event.
         rafId = requestAnimationFrame(tick);
         return;
       }
 
-      // Complete: fade out, then unmount.
+      resetToHero();
       fadeTimer = window.setTimeout(() => setFading(true), 250);
       unmountTimer = window.setTimeout(() => setUnmounted(true), 850);
     };
@@ -61,6 +77,8 @@ export default function Preloader() {
 
     return () => {
       window.removeEventListener("load", handleLoad);
+      window.removeEventListener("pageshow", settle);
+      if (settleTimer) window.clearTimeout(settleTimer);
       if (rafId) cancelAnimationFrame(rafId);
       if (fadeTimer) window.clearTimeout(fadeTimer);
       if (unmountTimer) window.clearTimeout(unmountTimer);

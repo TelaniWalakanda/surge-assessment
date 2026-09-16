@@ -1,10 +1,3 @@
-/**
- * Type definitions for the NŌTA home page content.
- *
- * All copy is fetched from the Strapi CMS at runtime — no static content is
- * stored in the frontend. See `src/lib/strapi.ts` and `src/lib/home-mapper.ts`.
- */
-
 export type NavLink = {
   label: string;
   href: string;

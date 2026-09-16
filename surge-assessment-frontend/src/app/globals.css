@@ -13,7 +13,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-/* Site-wide mobile/desktop breakpoint: `md` = 1024px. */
 @theme {
   --breakpoint-md: 64rem;
 }
@@ -32,4 +31,81 @@ body {
 ::selection {
   background: var(--foreground);
   color: var(--background);
+}
+
+.wipe {
+  position: relative;
+  height: 180vh;
+  margin-top: -100vh;
+  pointer-events: none;
+}
+
+.wipe__camera {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.wipe__backdrop {
+  position: absolute;
+  inset: 0;
+  background: #000;
+}
+
+.wipe__panels {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: end;
+  height: 100%;
+}
+
+.wipe__panel {
+  height: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  background: #fff;
+  will-change: transform;
+}
+
+@media (max-width: 1023.98px) {
+  .wipe {
+    display: none;
+  }
+}
+
+.bars {
+  position: relative;
+  height: 180vh;
+  margin-top: -70vh;
+  pointer-events: none;
+}
+
+.bars__camera {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bars__stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 2fr 2fr 2fr;
+  justify-items: center;
+  height: 100%;
+}
+
+.bars__bar {
+  height: 100%;
+  width: 0%;
+  background: #000;
+  will-change: width;
+}
+
+@media (max-width: 1023.98px) {
+  .bars {
+    display: none;
+  }
 }

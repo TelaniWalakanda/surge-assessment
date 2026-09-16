@@ -5,13 +5,6 @@ type SectionIntroProps = {
   className?: string;
 };
 
-/**
- * Standalone centered eyebrow + title section, matching the
- * "Works with / smart paper" style in the reference.
- *
- * Renders its own background so it can sit directly in the page flow before
- * a section component. `tone="dark"` is for dark backgrounds.
- */
 export default function SectionIntro({
   eyebrow,
   title,

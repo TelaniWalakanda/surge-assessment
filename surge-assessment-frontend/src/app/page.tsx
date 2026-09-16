@@ -1,6 +1,8 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
+import SteppedWipeSection from "@/components/SteppedWipeSection";
 import Specifications from "@/components/specifications";
+import BarsWipeSection from "@/components/BarsWipeSection";
 import Audience from "@/components/audience";
 import SmartPaper from "@/components/smart-paper";
 import InsideTheBox from "@/components/inside-the-box";
@@ -13,10 +15,6 @@ import type { HomeContent } from "@/lib/home-content";
 
 export const dynamic = "force-dynamic";
 
-/**
- * Populate every nested component + media field the home page reads from.
- * Strapi v5 does not expand these automatically with a bare `populate=*`.
- */
 const HOME_POPULATE = [
   "populate[hero][populate]=*",
   "populate[specificationsSection][populate][specifications_group][populate][specification_text]=true",
@@ -66,8 +64,10 @@ export default async function Home() {
       <Header {...content.header} />
       <main>
         <Hero {...content.hero} />
+        <SteppedWipeSection />
         <div className="relative z-10">
           <Specifications {...content.specifications} />
+          <BarsWipeSection />
           <Audience {...content.audience} />
           <SectionIntro
             eyebrow={content.paperIntro.eyebrow}

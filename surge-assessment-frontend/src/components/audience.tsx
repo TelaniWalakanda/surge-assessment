@@ -1,3 +1,4 @@
+import AudienceMedia from "@/components/audience-media";
 import type { HomeContent } from "@/lib/home-content";
 
 type AudienceProps = HomeContent["audience"];
@@ -45,24 +46,7 @@ export default function Audience({
           </div>
         </div>
 
-        {video ? (
-          <div className="mt-16 overflow-hidden rounded-2xl">
-            <video
-              src={video.url}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="h-auto w-full"
-            />
-          </div>
-        ) : image ? (
-          <img
-            src={image.url}
-            alt=""
-            className="mt-16 h-auto w-full rounded-2xl"
-          />
-        ) : null}
+        <AudienceMedia video={video} image={image} />
       </div>
     </section>
   );
