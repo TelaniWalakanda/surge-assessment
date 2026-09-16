@@ -1,6 +1,8 @@
 import Header from "@/components/header";
 import Hero from "@/components/hero";
+import SteppedWipeSection from "@/components/SteppedWipeSection";
 import Specifications from "@/components/specifications";
+import BarsWipeSection from "@/components/BarsWipeSection";
 import Audience from "@/components/audience";
 import SmartPaper from "@/components/smart-paper";
 import InsideTheBox from "@/components/inside-the-box";
@@ -66,8 +68,20 @@ export default async function Home() {
       <Header {...content.header} />
       <main>
         <Hero {...content.hero} />
+        {/*
+          The wipe is `margin-top: -100vh`, so it starts inside the hero's last
+          pinned viewport and stays pinned over it while the curtains rise —
+          it must sit immediately after the hero for that overlap to line up.
+        */}
+        <SteppedWipeSection />
         <div className="relative z-10">
           <Specifications {...content.specifications} />
+          {/*
+            Sits inside this wrapper (and after the specs section) so it paints
+            over it: the wrapper is a stacking context, so a later positioned
+            sibling is exactly the layer that must cover the section before it.
+          */}
+          <BarsWipeSection />
           <Audience {...content.audience} />
           <SectionIntro
             eyebrow={content.paperIntro.eyebrow}
